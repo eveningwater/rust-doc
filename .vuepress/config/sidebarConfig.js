@@ -6,9 +6,20 @@ module.exports = [
         sidebarDepth:1
     },
     {
-        title: 'Rust的安装',
-        path: '/doc/install', 
+        title: '入门',
+        path: '/doc/getting-started', 
         collapsable: true,
-        sidebarDepth:1
+        children: [
+            {
+                title: '安装',
+                path:"/doc/install",
+                collapsable: true
+            },
+            {
+                title: 'hello,world',
+                path:"/doc/hello-world",
+                collapsable: true
+            }
+        ]
     }
 ]

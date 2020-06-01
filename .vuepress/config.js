@@ -11,14 +11,14 @@ module.exports = {
         }]
     ],
     title: 'rust语言中文文档', //网站的标题
-    description: 'rust语言的中文文档', //网站的描述
+    description: '一门赋予每个人构建可靠且高效软件能力的语言。', //网站的描述
     themeConfig: {
         nav: navConfig,
         sidebar: sidebarConfig
     },
     plugins: {
         '@vuepress/medium-zoom': {
-            selector: '.theme-default-content img',
+            selector: '#app img',
             // medium-zoom options here
             // See: https://github.com/francoischalifour/medium-zoom#options
             options: {
