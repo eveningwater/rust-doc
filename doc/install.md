@@ -103,6 +103,11 @@ Rust的安装还包括本地文档的副本，因此你可以离线阅读。运�
 
 ![安装成功](./images/rust-install-success.png)
 
+输入命令`rustc --version`我们可以看到版本号，如下图所示:
+
+![rust版本](./images/rust-version.jpg)
+
+
 ### 在线编辑器
 
 如果你不想安装，只想学习语法，可以前往[Rust 在线编辑器](https://play.rust-lang.org/)，这是一个在线运行代码的编辑器。

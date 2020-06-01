@@ -19,6 +19,11 @@ module.exports = [
                 title: 'hello,world',
                 path:"/doc/hello-world",
                 collapsable: true
+            },
+            {
+                title: 'hello,cargo',
+                path:"/doc/hello-cargo",
+                collapsable: true
             }
         ]
     }
