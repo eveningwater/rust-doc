@@ -26,5 +26,11 @@ module.exports = [
                 collapsable: true
             }
         ]
-    }
+    },
+    {
+        title: '猜一猜游戏',
+        path: '/doc/guess-game', 
+        collapsable: true,
+        sidebarDepth:1
+    },
 ]
