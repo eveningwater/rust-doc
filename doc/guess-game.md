@@ -121,4 +121,44 @@ let mut bar = 100;//可变
 
 总而言之，`let mut guess = String::new();`这一行代码就是创建一个可变的变量，并且这个变量的值是一个空的字符串实例。
 
+回想一下在程序的第一行代码中，我们通过使用`use std::io;`语句来从标准库中获取到的有关用户输入输出的关联函数，现在我们从`io`模块中调用`stdin`函数。如下:
+
+```rust
+    io::stdin().read_line(&mut guess);
+```
+
+如果我们在程序的开头的代码中并没有写`use std::io;`，我们在这里调用这个函数的时候需要重写成`std::io::stdin`。`stdin`是一个返回类型为[std::io::stdin](https://doc.rust-lang.org/std/io/struct.Stdin.html)的实例，也就是一种类型，代表着为你的终端处理标准的输出。
+
+下一部分代码,`.read_line(&mut guess)`,调用[read_line](https://doc.rust-lang.org/std/io/struct.Stdin.html#method.read_line)方法在标准输入中获取并处理用户的输入。我们也为`read_line`方法传递了一个参数:`&mut guess`。
+
+`read_line`的工作就是将用户输入的任何内容带入标准输入库中，并放置到字符串中，所以它将该字符串作为参数。字符串参数必须是可变，因此可以通过添加用户的输入来更改字符串的内容。
+
+`&`标识符代表参数是引用，它为我们提供了一种方式，也就是我们的代码的很多地方都可以访问到一条数据，也因此不需要做复制数据到内存中的操作。引用是一种复杂的特性，使用引用也比较安全和便捷，这也是`Rust`的主要优势之一。我们并不需要为了完成这个程序而了解引用的太多细节，现在我们需要知道的就像变量，引用默认是不可变的
+因此我们需要写`&mut guess`而不是`&guess`来让变量可变。（第4章会解释引用的更多信息。）
+
+### 使用返回的结果来处理潜在的故障
+
+我们接着讨论一下第三行代码，也是属于这一部分的代码，它是一个方法:
+
+```rust
+ expect("调用read_line失败!");
+```
+
+当我们使用类似`.foo()`的格式来调用方法时，最明智的做法就是引入换行符或者是其它空格来将很长的一行代码进行分隔，因此我们需要重写如上的代码如下:
+
+```rust
+   io::stdin().read_line(&mut guess).expect("调用read_line失败!");
+```
+
+然而这样很长的一行是很难阅读的，所以最好要分割它。现在我们来讨论一下这一行都做了什么。
+
+正如更早之前所提到的，`read_line`将用户键入的内容放入我们要传递的字符串中，但它还会返回一个值，在这种情况下为[io::Result](https://doc.rust-lang.org/std/io/type.Result.html)。`Rust`在它的标准库(一种通用的[Result](https://doc.rust-lang.org/std/result/enum.Result.html)也作为一个特殊的版本的子模块，就像`io::Result`)中有一种数值类型叫做`Result`。
+
+`Result`是可以进行[枚举](https://doc.rust-lang.org/book/ch06-00-enums.html)操作的，通常也被作为枚举来提及。一个枚举值也是一个类型可以有许多被修复和设置的值，并且这些值通常也被叫做枚举的变体。第六章会详细介绍枚举。
+
+> 变体，也可以把它理解为回调函数吧。
+
+对于`Result`，通常变体就是`Ok`或者`Err`。
+
+
 
