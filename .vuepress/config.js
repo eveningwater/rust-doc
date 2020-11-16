@@ -3,7 +3,7 @@ const sidebarConfig = require('./config/sidebarConfig.js')
 
 module.exports = {
     dest: "./docs",
-    base: "/",
+    base: "/rust-doc/",
     head: [
         ['link', {
             rel: 'icon',
