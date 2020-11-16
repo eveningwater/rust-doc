@@ -2,8 +2,8 @@ const navConfig = require('./config/navConfig.js')
 const sidebarConfig = require('./config/sidebarConfig.js')
 
 module.exports = {
-    dest: "./dist",
-    base: "/rustDoc/",
+    dest: "./rust-doc",
+    base: "/",
     head: [
         ['link', {
             rel: 'icon',
