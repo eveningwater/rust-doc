@@ -158,7 +158,27 @@ let mut bar = 100;//可变
 
 > 变体，也可以把它理解为回调函数吧。
 
-对于`Result`，通常变体就是`Ok`或者`Err`。
+对于`Result`，通常变体就是`Ok`或者`Err`。`OK`变体表示这种操作是成功的，并且在`OK`里面会生成一个成功值。`Err`变体意味着这种操作失败了，并且`Err`也会包含一些关于这种操作如何或者是为什么失败的信息。
 
+`Result`类型旨在对错误处理信息进行编码。`Result`类型的值就像任意类型的值，会有方法来定义它们。`io::Result`有一个你可以调用的`expect`方法。如果`io::Result`这个实例的值是`Err`,`expect`将会导致程序崩溃并且会显示你需要传递一个参数给`expect`的信息。如果`read_line`方法返回一个`Err`值，则可能是来自底层操作系统的一种错误结果。如果`io::Result`这个实例的值是`OK`，`expect`将会将`OK`保存的返回值返回给你，让你能够使用它。在这种情况下，这个值就是用户通过标准的输入框键入的数字字符。
+
+如果你不调用`expect`方法，程序将会编译，并且你会得到一个警告:
+
+```rust
+$ cargo build
+   Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
+warning: unused `std::result::Result` that must be used
+  --> src/main.rs:10:5
+   |
+10 |     io::stdin().read_line(&mut guess);
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_must_use)]` on by default
+   = note: this `Result` may be an `Err` variant, which should be handled
+
+warning: 1 warning emitted
+
+    Finished dev [unoptimized + debuginfo] target(s) in 0.59s
+```
 
 
