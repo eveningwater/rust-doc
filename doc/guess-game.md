@@ -181,4 +181,48 @@ warning: 1 warning emitted
     Finished dev [unoptimized + debuginfo] target(s) in 0.59s
 ```
 
+rust的警告说明你没有用`read_line`方法返回的`Result`值,也就是说程序并没有处理这个可能的错误。消除警告的办法就是编写实际的错误处理，但是由于你只是想在程序出现问题时崩溃，所以你可以使用`expect`方法。你将在第9章中学会如何处理错误。
+
+### 使用println!方法来在终端打印值，占位符
+
+除了结束大括号之外，到目前为止在添加的代码中需要讨论的只有一行，那就是如下所示:
+
+```rust
+println!("You guessed:{}",guess);
+```
+
+这一行将会打印一个字符串，也就是我们保存了用户所输入的数字。一对打括号`{}`,是一种占位符，我们可以认为它就是一种固定值。您可以使用大括号打印多个值：第一组大括号包含在格式字符串之后列出的第一个值，第二组包含第二个值，依此类推。 在一次调用 println! 中打印多个值！ 看起来像这样：
+
+```rust
+let x = 5;
+let y = 10;
+println!("x = {} and y = {}",x,y);
+```
+
+代码将会打印`x = 5 and y = 10`。
+
+### 测试第一部分
+
+让我们测试一下猜数字游戏的第一部分代码。通过使用`cargo run`来运行:
+
+```rust
+$ cargo run
+   Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
+    Finished dev [unoptimized + debuginfo] target(s) in 6.44s
+     Running `target/debug/guessing_game`
+Guess the number!
+Please input your guess.
+6
+You guessed: 6
+```
+
+如下图所示:
+
+![]('./images/cargo-run-guessgame.png')
+
+在此刻，游戏的第一部分已经生效:我们已经得到了从键盘输入的结果并且打印出了它。
+
+### 生成一个隐秘的数字
+
+下一步，我们将需要生成一个秘密的数字让用户去尝试猜一下。秘密的数字应该每次都是不同的，这样也就可以让用户可以玩多次游戏。让我们使用1到100之间的随机数，这样游戏也没有那么难。rust的标准库中也没有包含随机数函数。然而，rust团队提供了一个[rand](https://crates.io/crates/rand)依赖箱。
 
