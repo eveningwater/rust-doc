@@ -3,7 +3,7 @@ const sidebarConfig = require('./config/sidebarConfig.js')
 
 module.exports = {
     dest: "./dist",
-    base: process.env.NODE_ENV === 'development' ? "/rust-doc/" : '/',
+    base: process.env.NODE_ENV !== 'development' ? "/rust-doc/" : '/',
     head: [
         ['link', {
             rel: 'icon',
