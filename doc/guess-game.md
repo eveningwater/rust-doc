@@ -294,3 +294,24 @@ Cargo 有一种机制，可确保你或任何其他人每次构建代码时都�
 当你第一次构建项目时，Cargo 会找出符合条件的所有依赖项版本，然后将它们写入 Cargo.lock 文件。当你将来构建项目时，Cargo 将看到 Cargo.lock 文件存在，并将使用那里指定的版本，而不是再次进行找出版本的所有工作。这让你可以自动获得可重现的构建。换句话说，由于 Cargo.lock 文件的存在，你的项目将保持在 0.8.5 版本，直到你明确升级。由于 Cargo.lock 文件对于可重现构建很重要，因此它通常会与项目中的其余代码一起检入源代码控制中。
 
 #### 更新依赖箱以获取新版本
+
+当你确实想要更新包时，Cargo 会提供命令 update，它将忽略 Cargo.lock 文件并找出符合 Cargo.toml 中规范的所有最新版本。然后，Cargo 会将这些版本写入 Cargo.lock 文件。在这种情况下，Cargo 将仅查找大于 0.8.5 且小于 0.9.0 的版本。如果 rand 包发布了两个新版本 0.8.6 和 0.9.0，则运行 cargo update 时会看到以下内容：
+
+```rust
+$ cargo update
+    Updating crates.io index
+    Updating rand v0.8.5 -> v0.8.6
+```
+
+Cargo 忽略了 0.9.0 版本。此时，你还会注意到 Cargo.lock 文件中的更改，指出你现在使用的 rand 包版本是 0.8.6。要使用 rand 版本 0.9.0 或 0.9.x 系列中的任何版本，你必须将 Cargo.toml 文件更新为如下所示：
+
+```rust
+[dependencies]
+rand = "0.9.0"
+```
+
+下次运行 cargo build 时，Cargo 将更新可用包的注册表，并根据你指定的新版本重新评估你的随机需求。
+
+关于 [Cargo](https://doc.rust-lang.org/cargo/) 及其[生态系统](https://doc.rust-lang.org/cargo/reference/publishing.html)还有很多要说的，我们将在第 14 章中讨论，但现在，这就是你需要知道的全部内容。Cargo 使复用库变得非常容易，因此开发者能够编写由多个包组装而成的较小项目。
+
+### 生成随机数
