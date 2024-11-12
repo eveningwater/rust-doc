@@ -289,7 +289,7 @@ $ cargo build
 
 #### 使用 Cargo.lock 文件确保可重现构建
 
-Cargo 有一种机制，可确保你或任何其他人每次构建代码时都可以重建相同的工件：Cargo 将仅使用你指定的依赖项版本，除非你另有说明。例如，假设下周 rand crate 的 0.8.6 版本发布，该版本包含一个重要的bug修复，但也包含一个会破坏你的代码的回归。为了处理这个问题，Rust 会在你第一次运行 cargo build 时创建 Cargo.lock 文件，因此我们现在在 guessing_game 目录中有这个文件。
+Cargo 有一种机制，可确保你或任何其他人每次构建代码时都可以重建相同的工件：Cargo 将仅使用你指定的依赖项版本，除非你另有说明。例如，假设下周 rand crate 的 0.8.6 版本发布，该版本包含一个重要的 bug 修复，但也包含一个会破坏你的代码的回归。为了处理这个问题，Rust 会在你第一次运行 cargo build 时创建 Cargo.lock 文件，因此我们现在在 guessing_game 目录中有这个文件。
 
 当你第一次构建项目时，Cargo 会找出符合条件的所有依赖项版本，然后将它们写入 Cargo.lock 文件。当你将来构建项目时，Cargo 将看到 Cargo.lock 文件存在，并将使用那里指定的版本，而不是再次进行找出版本的所有工作。这让你可以自动获得可重现的构建。换句话说，由于 Cargo.lock 文件的存在，你的项目将保持在 0.8.5 版本，直到你明确升级。由于 Cargo.lock 文件对于可重现构建很重要，因此它通常会与项目中的其余代码一起检入源代码控制中。
 
@@ -343,11 +343,11 @@ fn main() {
 }
 ```
 
-首先，我们添加`use rand::Rng;`行。Rng依赖定义了随机数生成器实现的方法，并且此依赖必须在当前上下文中引入，我们才能使用这些方法。第 10 章将详细介绍依赖。
+首先，我们添加`use rand::Rng;`行。Rng 依赖定义了随机数生成器实现的方法，并且此依赖必须在当前上下文中引入，我们才能使用这些方法。第 10 章将详细介绍依赖。
 
-接下来，我们在中间添加两行。在第一行中，我们调用`rand::thread_rng`函数，该函数为我们提供要使用的特定随机数生成器：一个当前在本地执行的线程并由操作系统实现的生成器。然后我们在随机数生成器上调用 `gen_range` 方法。此方法由我们使用 `use rand::Rng;` 语句引入的 Rng包中定义。gen_range 方法调用range表达式作为参数然后生成范围内的随机数。我们在此处使用的range表达式类型采用 `start..=​​end` 形式，并且包括下限和上限，因此我们需要指定 `1..=100` 来请求 1 到 100 之间的数字。
+接下来，我们在中间添加两行。在第一行中，我们调用`rand::thread_rng`函数，该函数为我们提供要使用的特定随机数生成器：一个当前在本地执行的线程并由操作系统实现的生成器。然后我们在随机数生成器上调用 `gen_range` 方法。此方法由我们使用 `use rand::Rng;` 语句引入的 Rng 包中定义。gen_range 方法调用 range 表达式作为参数然后生成范围内的随机数。我们在此处使用的 range 表达式类型采用 `start..=​​end` 形式，并且包括下限和上限，因此我们需要指定 `1..=100` 来请求 1 到 100 之间的数字。
 
-> 注意：你不仅会知道要使用哪些包还要知道从依赖项中调用哪些方法和函数，因此每个依赖项都有包含使用说明的文档。Cargo 的另一个巧妙功能是运行 `cargo doc --open` 命令将在本地构建所有依赖项提供的文档并在浏览器中打开它。例如，如果你对rand依赖项中的其他功能感兴趣，请运行 `cargo doc --open` 并单击左侧边栏中的 rand。
+> 注意：你不仅会知道要使用哪些包还要知道从依赖项中调用哪些方法和函数，因此每个依赖项都有包含使用说明的文档。Cargo 的另一个巧妙功能是运行 `cargo doc --open` 命令将在本地构建所有依赖项提供的文档并在浏览器中打开它。例如，如果你对 rand 依赖项中的其他功能感兴趣，请运行 `cargo doc --open` 并单击左侧边栏中的 rand。
 
 第二行新代码打印秘密数字。这在我们开发程序时很有用，以便能够对其进行测试，但我们将从最终版本中删除它。如果程序一启动就打印答案，那就没什么意思了！
 
@@ -377,3 +377,147 @@ You guessed: 5
 你应该得到不同的随机数，并且它们都应该是 1 到 100 之间的数字。这很不错！
 
 ## 将猜测数字与秘密数字进行比较
+
+现在我们有了用户输入和随机数，我们可以比较它们了。该步骤如以下 2-4 示例代码所示。请注意，此代码目前还不能编译，我们将对此进行解释。
+
+文件名: src/main.rs (示例 2-4)
+
+```rust
+use rand::Rng;
+use std::cmp::Ordering;
+use std::io;
+
+fn main() {
+    // --省略的代码--
+    // println!("Guess the number!");
+    // let secret_number = rand::thread_rng().gen_range(1..=100);
+    // println!("The secret number is: {secret_number}");
+    // println!("Please input your guess.");
+    // let mut guess = String::new();
+    // io::stdin()
+    //     .read_line(&mut guess)
+    //     .expect("Failed to read line");
+
+    println!("You guessed: {guess}");
+
+    match guess.cmp(&secret_number) {
+        Ordering::Less => println!("Too small!"),
+        Ordering::Greater => println!("Too big!"),
+        Ordering::Equal => println!("You win!"),
+    }
+}
+```
+
+首先，我们添加另一个 use 语句，将标准库中的一个名为`std::cmp::Ordering`的类型引入当前上下文中。Ordering 类型是另一个枚举，具有 Less、Greater 和 Equal 变量。这是比较两个值时可能出现的三种结果。
+
+然后我们在底部添加三行使用 Ordering 类型的新代码。`cmp`方法比较两个值，并且可以在任何可以比较的变量上调用。它引用你想要比较的任何变量：这里它将 `guess` 与 `secret_number` 进行比较。然后它返回我们使用 `use` 语句带入当前上下文的 Ordering 枚举的变量。我们使用 [match](https://doc.rust-lang.org/book/ch06-02-match.html) 表达式来决定下一步要做什么，这取决于使用 guess 和 secret_number 中的值调用 cmp 时返回的 Ordering 的变量值。
+
+match 表达式由多个分支组成。分支由要匹配的模式和在 match 给定的值符合该分支模式时应运行的代码组成。Rust 获取 match 给定的值并依次查看每个分支的模式。模式和 match 表达式是 Rust 的强大功能：它们让你可以表达代码可能遇到的各种情况，并确保你能够处理所有这些情况。这些功能将分别在第 6 章和第 18 章中详细介绍。
+
+让我们通过此处使用的 match 表达式来演示一个示例。假设用户猜测了 50，而这次随机生成的秘密数字是 38。
+
+当代码将 50 与 38 进行比较时，`cmp` 方法将返回 `Ordering::Greater`，因为 50 大于 38。match 表达式获取 `Ordering::Greater` 值并开始检查每个分支的模式。它查看第一个分支的模式 `Ordering::Less`，并发现值 `Ordering::Greater` 与 `Ordering::Less` 不匹配，因此它忽略该分支中的代码并移至下一个分支。下一个分支的模式是 `Ordering::Greater`，它与 `Ordering::Greater` 匹配！该分支中的相关代码将执行并在终端控制台上打印 `Too big!`。match 表达式在第一次成功匹配后结束，因此在这种情况下它不会查看最后一个分支。
+
+但是，示例 2-4 中的代码还不能编译。我们来尝试一下：
+
+```rust
+$ cargo build
+   Compiling libc v0.2.86
+   Compiling getrandom v0.2.2
+   Compiling cfg-if v1.0.0
+   Compiling ppv-lite86 v0.2.10
+   Compiling rand_core v0.6.2
+   Compiling rand_chacha v0.3.0
+   Compiling rand v0.8.5
+   Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
+error[E0308]: mismatched types
+  --> src/main.rs:22:21
+   |
+22 |     match guess.cmp(&secret_number) {
+   |                 --- ^^^^^^^^^^^^^^ expected `&String`, found `&{integer}`
+   |                 |
+   |                 arguments to this method are incorrect
+   |
+   = note: expected reference `&String`
+              found reference `&{integer}`
+note: method defined here
+  --> /rustc/129f3b9964af4d4a709d1383930ade12dfe7c081/library/core/src/cmp.rs:840:8
+
+For more information about this error, try `rustc --explain E0308`.
+error: could not compile `guessing_game` (bin "guessing_game") due to 1 previous error
+```
+
+错误的核心是类型不匹配。Rust 有一个强大的静态类型系统。但是，它也有类型推断。当我们写 `let mut guess = String::new()` 时，Rust 能够推断 guess 应该是 String，而不需要我们写出类型。另一方面，secret_number 是数字类型。Rust 的一些数字类型的值可以在 1 到 100 之间：i32，32 位数字；u32，无符号 32 位数字；i64，64 位数字；以及其他。除非另有说明，否则 Rust 默认为 i32，这是 secret_number 的类型，除非你在其他地方添加类型信息，导致 Rust 推断出不同的数字类型。错误的原因是 Rust 无法比较字符串和数字类型。
+
+最终，我们希望将程序读取的字符串转换为数字类型，以便我们可以将其与秘密数字进行数字比较。我们通过在主函数体中添加这一行来实现：
+
+```rust
+use rand::Rng;
+use std::cmp::Ordering;
+use std::io;
+
+fn main() {
+    // println!("Guess the number!");
+
+    // let secret_number = rand::thread_rng().gen_range(1..=100);
+
+    // println!("The secret number is: {secret_number}");
+
+    // println!("Please input your guess.");
+
+    // --省略--
+
+    let mut guess = String::new();
+
+    io::stdin()
+        .read_line(&mut guess)
+        .expect("Failed to read line");
+
+    let guess: u32 = guess.trim().parse().expect("Please type a number!");
+
+    println!("You guessed: {guess}");
+
+    match guess.cmp(&secret_number) {
+        Ordering::Less => println!("Too small!"),
+        Ordering::Greater => println!("Too big!"),
+        Ordering::Equal => println!("You win!"),
+    }
+}
+```
+
+那一行代码就是:
+
+```rust
+let guess: u32 = guess.trim().parse().expect("Please type a number!");
+```
+
+我们创建了一个名为 guess 的变量。但是等一下，程序中不是已经有一个名为 guess 的变量了吗？它确实有，但 Rust 允许我们用新值覆盖 guess 的先前值。覆盖让我们可以重用 guess 变量名，而不必创建两个唯一的变量，例如 guess_str 和 guess。我们将在[第 3 章](https://doc.rust-lang.org/book/ch03-01-variables-and-mutability.html#shadowing)中更详细地介绍这一点，但现在，要知道这个特性通常在你想要将值从一种类型转换为另一种类型时使用。
+
+我们将这个新变量绑定到表达式 guess.trim().parse()。表达式中的 guess 指的是包含字符串输入的原始 guess 变量。String 实例上的 trim 方法将消除开头和结尾的任何空格，我们必须这样做才能将字符串与只能包含数值数据的 u32 进行比较。用户必须按回车键才能满足 read_line 并输入他们的猜测，这会在字符串中添加一个换行符。例如，如果用户输入 5 并按回车键，guess 看起来就像这样：5\n。\n 代表“换行符”。（在 Windows 上，按回车键会导致回车符和换行符 \r\n。）trim 方法会消除 \n 或 \r\n，只剩下 5。
+
+字符串上的[parse](https://doc.rust-lang.org/std/primitive.str.html#method.parse)方法将字符串转换为另一种类型。在这里，我们使用它从字符串转换为数字。我们需要使用 `let guess: u32` 告诉 Rust 我们想要的确切数字类型。 guess 后面的冒号(:)告诉 Rust 我们将注释变量的类型。Rust 有几个内置的数字类型；这里看到的 u32 是一个无符号的 32 位整数。对于较小的正数来说，这是一个很好的默认选择。你将在[第 3 章](https://doc.rust-lang.org/book/ch03-02-data-types.html#integer-types)中了解其他数字类型。
+
+此外，此示例程序中的 u32 注释和与 secret_number 的比较意味着 Rust 将推断 secret_number 也应该是 u32。所以现在比较的是同一类型的两个值！
+
+parse 方法只适用于逻辑上可以转换为数字的字符，因此很容易导致错误。例如，如果字符串包含 `A👍%`，则无法将其转换为数字。由于可能会失败，parse 方法返回 Result 类型，就像 read_line 方法一样（前面在“[使用 Result 处理潜在失败](https://eveningwater.github.io/rust-doc/doc/guess-game.html#%E4%BD%BF%E7%94%A8%E8%BF%94%E5%9B%9E%E7%9A%84%E7%BB%93%E6%9E%9C%E6%9D%A5%E5%A4%84%E7%90%86%E6%BD%9C%E5%9C%A8%E7%9A%84%E6%95%85%E9%9A%9C)”中讨论过）。我们将再次使用 expect 方法以相同的方式处理此 Result。如果 parse 返回 Err Result 变体（因为它无法从字符串创建数字），则 expect 调用将使游戏崩溃并打印我们给它的消息。如果 parse 可以成功地将字符串转换为数字，它将返回 Result 的 Ok 变体，并且 expect 将从 Ok 值返回我们想要的数字。
+
+现在让我们运行程序：
+
+```rust
+$ cargo run
+   Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.43s
+     Running `target/debug/guessing_game`
+Guess the number!
+The secret number is: 58
+Please input your guess.
+  76
+You guessed: 76
+Too big!
+```
+
+太棒了！即使在猜测之前添加了空格，程序仍然会判断出用户猜测的是 76。运行程序几次，以验证不同输入类型的不同行为：正确猜测数字、猜测过大的数字以及猜测过小的数字。
+
+现在游戏的大部分功能都已运行，但用户只能猜测一次。让我们通过添加循环来改变这种情况！
+
+## 使用循环允许多次猜测
