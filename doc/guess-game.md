@@ -269,7 +269,7 @@ $ cargo build
 
 ```
 
-示例2-2: 将依赖包添加为依赖项后运行 Cargo build 的输出
+示例 2-2: 将依赖包添加为依赖项后运行 Cargo build 的输出
 
 你可能会看到不同的版本号（但由于 SemVer，它们都与代码兼容！）和不同的行（取决于操作系统），并且行的顺序可能不同。
 
@@ -523,3 +523,241 @@ Too big!
 现在游戏的大部分功能都已运行，但用户只能猜测一次。让我们通过添加循环来改变这种情况！
 
 ## 使用循环允许多次猜测
+
+loop 关键字创建一个无限循环。我们将添加一个循环，让用户有更多机会猜数字：
+
+文件名: src/main.rs
+
+```rust
+use rand::Rng;
+use std::cmp::Ordering;
+use std::io;
+
+fn main() {
+    // println!("Guess the number!");
+    // let secret_number = rand::thread_rng().gen_range(1..=100);
+    println!("The secret number is: {secret_number}");
+
+    loop {
+        println!("Please input your guess.");
+
+        // let mut guess = String::new();
+        // io::stdin()
+        //     .read_line(&mut guess)
+        //     .expect("Failed to read line");
+        // let guess: u32 = guess.trim().parse().expect("Please type a number!");
+        // println!("You guessed: {guess}");
+
+        match guess.cmp(&secret_number) {
+            Ordering::Less => println!("Too small!"),
+            Ordering::Greater => println!("Too big!"),
+            Ordering::Equal => println!("You win!"),
+        }
+    }
+}
+```
+
+如你所见，我们将从猜测输入提示开始的所有内容都移到了循环中。请确保将循环中的每行再缩进四个空格，然后再次运行该程序。程序现在将永远要求再次猜测，这实际上引入了一个新问题。用户似乎无法退出！
+
+用户始终可以使用键盘快捷键 `ctrl + c` 来中断程序。但是还有另一种方法可以中断程序，正如“[将猜测数字与秘密数字进行比较](#将猜测数字与秘密数字进行比较)”中的解析讨论中所述：如果用户输入非数字答案，程序将崩溃。我们可以利用这一点来允许用户退出，如下所示：
+
+```rust
+$ cargo run
+   Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
+    Finished dev [unoptimized + debuginfo] target(s) in 1.50s
+     Running `target/debug/guessing_game`
+Guess the number!
+The secret number is: 59
+Please input your guess.
+45
+You guessed: 45
+Too small!
+Please input your guess.
+60
+You guessed: 60
+Too big!
+Please input your guess.
+59
+You guessed: 59
+You win!
+Please input your guess.
+quit
+thread 'main' panicked at 'Please type a number!: ParseIntError { kind: InvalidDigit }', src/main.rs:28:47
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+```
+
+输入 `quit` 将退出游戏，但你会注意到，输入任何其他非数字输入也会退出游戏。至少可以说，这不是最理想的；我们希望当猜出正确的数字时游戏也停止。
+
+### 猜对后退出
+
+让我们通过添加 break 语句来编写游戏程序，让其在用户获胜时退出：
+
+```rust
+use rand::Rng;
+use std::cmp::Ordering;
+use std::io;
+
+fn main() {
+    // println!("Guess the number!");
+
+    // let secret_number = rand::thread_rng().gen_range(1..=100);
+
+    // println!("The secret number is: {secret_number}");
+
+    loop {
+        // println!("Please input your guess.");
+
+        // let mut guess = String::new();
+
+        // io::stdin()
+        //     .read_line(&mut guess)
+        //     .expect("Failed to read line");
+
+        // let guess: u32 = guess.trim().parse().expect("Please type a number!");
+
+        // println!("You guessed: {guess}");
+
+
+        match guess.cmp(&secret_number) {
+            Ordering::Less => println!("Too small!"),
+            Ordering::Greater => println!("Too big!"),
+            Ordering::Equal => {
+                println!("You win!");
+                // 新增的代码
+                break;
+            }
+        }
+    }
+}
+```
+
+在 `You win!` 后面添加 break 行，使得程序在用户正确猜出秘密数字时退出循环。退出循环也意味着退出程序，因为循环是 main 的最后部分。
+
+### 处理无效输入
+
+为了进一步优化游戏的行为，而不是在用户输入非数字时让程序崩溃，我们让游戏忽略非数字，以便用户可以继续猜测。我们可以通过修改将 guess 从字符串转换为 u32 的行来实现这一点，如示例 2-5 所示。
+
+文件名: main.rs
+
+```rust
+use rand::Rng;
+use std::cmp::Ordering;
+use std::io;
+
+fn main() {
+    println!("Guess the number!");
+
+    let secret_number = rand::thread_rng().gen_range(1..=100);
+
+    println!("The secret number is: {secret_number}");
+
+    loop {
+        println!("Please input your guess.");
+
+        let mut guess = String::new();
+
+        io::stdin()
+            .read_line(&mut guess)
+            .expect("Failed to read line");
+
+        let guess: u32 = match guess.trim().parse() {
+            Ok(num) => num,
+            // 新增代码
+            Err(_) => continue,
+        };
+
+        println!("You guessed: {guess}");
+
+        match guess.cmp(&secret_number) {
+            Ordering::Less => println!("Too small!"),
+            Ordering::Greater => println!("Too big!"),
+            Ordering::Equal => {
+                println!("You win!");
+                break;
+            }
+        }
+    }
+}
+```
+
+示例 2-5: 忽略非数字猜测并要求再次猜测，而不是让程序崩溃
+
+我们从 expect 调用切换到 match 表达式，以便从发生错误时崩溃转变为处理错误。请记住，parse 返回 Result 类型，Result 是一个枚举，它具有 Ok 和 Err 变量。我们在这里使用 match 表达式，就像我们对 cmp 方法的 Ordering 结果所做的那样。
+
+如果 parse 能够成功将字符串转换为数字，它将返回一个包含结果数字的 Ok 值。该 Ok 值将与第一个分支的模式匹配，而 match 表达式将只返回 parse 生成的 num 值并放入 Ok 值中。该数字最终将出现在我们创建的新 guess 变量中我们想要的位置。
+
+如果 parse 无法将字符串转换为数字，它将返回一个包含更多错误信息的 Err 值。Err 值与第一个匹配分支中的 Ok(num) 模式不匹配，但与第二个分支中的 Err(_) 模式匹配。下划线 _ 是一个忽略任意错误的值；在这个例子中，我们表示我们想要匹配所有 Err 值，无论它们包含什么信息。因此，程序将执行第二个分支的代码 continue，它告诉程序进入循环的下一次迭代并要求再次猜测。因此，实际上，程序忽略了 parse 可能遇到的所有错误！
+
+现在程序中的所有内容都应该按预期工作了。让我们尝试一下：
+
+```rust
+$ cargo run
+   Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
+    Finished dev [unoptimized + debuginfo] target(s) in 4.45s
+     Running `target/debug/guessing_game`
+Guess the number!
+The secret number is: 61
+Please input your guess.
+10
+You guessed: 10
+Too small!
+Please input your guess.
+99
+You guessed: 99
+Too big!
+Please input your guess.
+foo
+Please input your guess.
+61
+You guessed: 61
+You win!
+```
+
+太棒了！最后再做一点小调整，我们就能完成猜谜游戏了。回想一下，程序仍在打印秘密数字。这对于测试来说很有效，但它毁了游戏。让我们删除输出秘密数字的 println!。示例 2-6 显示了最终代码。
+
+文件名: src/main.ts
+
+```rust
+use rand::Rng;
+use std::cmp::Ordering;
+use std::io;
+
+fn main() {
+    println!("Guess the number!");
+
+    let secret_number = rand::thread_rng().gen_range(1..=100);
+
+    loop {
+        println!("Please input your guess.");
+
+        let mut guess = String::new();
+
+        io::stdin()
+            .read_line(&mut guess)
+            .expect("Failed to read line");
+
+        let guess: u32 = match guess.trim().parse() {
+            Ok(num) => num,
+            Err(_) => continue,
+        };
+
+        println!("You guessed: {guess}");
+
+        match guess.cmp(&secret_number) {
+            Ordering::Less => println!("Too small!"),
+            Ordering::Greater => println!("Too big!"),
+            Ordering::Equal => {
+                println!("You win!");
+                break;
+            }
+        }
+    }
+}
+```
+示例 2-6: 完成猜谜游戏代码
+
+至此，你已成功构建了猜谜游戏。恭喜！
+
+## 总结
+
+这个项目以一种实践的方式向你介绍了许多新的 Rust 概念：let、match、函数、外部依赖的使用等等。在接下来的几章中，你将更详细地了解这些概念。第 3 章介绍了大多数编程语言都具有的概念，例如变量、数据类型和函数，并展示了如何在 Rust 中使用它们。第 4 章探讨了所有权，这是 Rust 有别于其他语言的一个特性。第 5 章讨论了结构和方法语法，第 6 章解释了枚举的工作原理。
