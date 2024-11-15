@@ -2,7 +2,7 @@
 home: true
 heroImage: /logo.svg
 actionText: 前往查看 →
-actionLink: /doc/introduce
+actionLink: /doc/introduce/introduce
 features:
 - title: 高性能
   details: Rust 速度惊人且内存利用率极高。由于没有运行时和垃圾回收，它能够胜任对性能要求特别高的服务，可以在嵌入式设备上运行，还能轻松和其他语言集成。

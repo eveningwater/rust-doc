@@ -220,7 +220,7 @@ You guessed: 6
 
 如下图所示:
 
-![](./images/cargo-run-guessgame.png)
+![](../images/cargo-run-guessgame.png)
 
 在此刻，游戏的第一部分已经生效:我们已经得到了从键盘输入的结果并且打印出了它。
 

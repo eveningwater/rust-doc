@@ -12,7 +12,7 @@ $ cargo --version
 
 如下图所示:
 
-![cargo版本](./images/cargo-version.png)
+![cargo版本](../images/cargo-version.png)
 
 如果看到版本号，就可以了！如果看到错误（例如`command not found`），请查看[其它安装方法](https://forge.rust-lang.org/infra/other-installation-methods.html)的文档，以确定如何安装 Cargo。
 
@@ -27,11 +27,11 @@ $ cd hello_cargo
 
 如下图所示:
 
-![cargodemo](./images/cargo-demo-1.png)
+![cargodemo](../images/cargo-demo-1.png)
 
 如果你在你的`projects`目录当中看到了如下图所示的文件，那证明你已经使用 cargo 创建一个新项目。
 
-![cargodemo](./images/cargo-demo-2.png)
+![cargodemo](../images/cargo-demo-2.png)
 
 第一行命令创建一个名为 hello_cargo 的新目录。我们已将项目命名为`hello_cargo`，而 Cargo 会在同名目录中创建其文件。进入`hello_cargo`目录并列出文件。你会看到 Cargo 为我们生成了两个文件和一个目录：一个`Cargo.toml`文件和一个包含`main.rs`文件的`src`目录。
 
@@ -56,13 +56,13 @@ edition = "2018"
 
 如下图所示:
 
-![cargodemo](./images/cargo-toml.png)
+![cargodemo](../images/cargo-toml.png)
 
 该文件采用[TOML](https://github.com/toml-lang/toml)（Tom’s Obvious, Minimal Language）格式，这是 Cargo 的配置格式。
 
 第一行`[package]`是一行标题，指示以下语句正在配置程序包。当我们向该文件添加更多信息时，我们将添加到其它行中。
 
-接下来的四行设置了 Cargo 编译程序所需的配置信息：名称，版本，编写者以及要使用的 Rust 版本。Cargo 从你的环境中获取你的姓名和电子邮件信息，因此，如果该信息不正确，请立即修复该信息，然后保存文件，我们将在附录 E 中讨论版本密钥。
+接下来的四行设置了 Cargo 编译程序所需的配置信息：名称，版本，编写者以及要使用的 Rust 版本。Cargo 从你的环境中获取你的姓名和电子邮件信息，因此，如果该信息不正确，请立即修复该信息，然后保存文件，我们将在[附录 E](./appendix/appendix-e.md) 中讨论版本密钥。
 
 最后一行`[dependencies]`是本节的开头，你可以在其中列出项目的任何依赖项。在 Rust 中，代码包称为`crates(中文译为盒子或者箱子)`。该项目不需要任何其他`crates`，但是我们将在第 2 章的第一个项目中使用，因此我们将使用此依赖项部分。
 
@@ -94,7 +94,7 @@ $ cargo build
 
 如下图所示:
 
-![cargo build](./images/cargo-build.png)
+![cargo build](../images/cargo-build.png)
 
 此命令在`target/debug/hello_cargo`（或 Windows 上的`target\debug\hello_cargo.exe`）中而不是当前目录中创建一个可执行文件。你可以使用以下命令运行可执行文件：
 
@@ -105,11 +105,11 @@ Hello, world!
 
 如下图所示:
 
-![cargo build](./images/cargo-build-run-1.png)
+![cargo build](../images/cargo-build-run-1.png)
 
 或者先`cd到exe文件下的根目录`，然后运行，如下图所示:
 
-![cargo build](./images/cargo-build-run-2.png)
+![cargo build](../images/cargo-build-run-2.png)
 
 如果一切顺利，`hello,world!`应该打印到终端。首次运行 cargo 将会在`target`目录中创建一个新文件：Cargo.lock。此文件跟踪项目中依赖项的确切版本。该项目没有依赖项，因此文件有内容是空白的。你将不需要手动更改此文件,cargo 会为你管理其内容。
 
@@ -124,7 +124,7 @@ Hello, world!
 
 如下图所示：
 
-![cargo run](./images/cargo-run.png)
+![cargo run](../images/cargo-run.png)
 
 请注意，这次我们没有看到表明`Cargo正在编译hello_cargo（Compiling hello_cargo v0.1.0 (file:///projects/hello_cargo)）`的输出。Cargo 发现文件没有更改，因此只运行了二进制文件。如果你修改了源代码，则 Cargo 将在运行项目之前重建项目，并且你将看到以下输出：
 
@@ -138,7 +138,7 @@ Hello, world! //一般都会修改这里的内容，所以这里的显示应该�
 
 如下图所示:
 
-![cargo run](./images/cargo-run-2.png)
+![cargo run](../images/cargo-run-2.png)
 
 cargo 还提供一个称为`cargo check`的命令。此命令会快速检查你的代码，以确保其可编译但不会产生可执行文件：
 
@@ -150,7 +150,7 @@ $ cargo check
 
 如下图所示:
 
-![cargo run](./images/cargo-check.png)
+![cargo run](../images/cargo-check.png)
 
 为什么不想要可执行文件？通常，`cargo check`比`cargo build`要快得多，因为它跳过了生成可执行文件的步骤。如果你在编写代码时不断检查代码是否运行，那么使用`cargo check`将加快流程！因此，许多 Rust 爱好者在编写程序以确保编译时会定期使用`cargo check`命令进行检查。然后，当他们准备使用可执行文件时，他们使用`cargo build`命令。
 

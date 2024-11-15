@@ -31,7 +31,7 @@ $ cd hello_world
 
 如下图所示:
 
-![hello,word](./images/hello-world-1.png)
+![hello,word](../images/hello-world-1.png)
 
 ### 编写和运行一个 Rust 运行程序
 
@@ -63,11 +63,11 @@ $ ./main
 
 如果运行提示如下错误，则代表我们未安装 Visual Studio 2019 安装构建工具,前往[下载地址](https://www.visualstudio.com/downloads/#build-tools-for-visual-studio-2019)下载安装。
 
-![错误](./images/hello-world-error-1.png)
+![错误](../images/hello-world-error-1.png)
 
 下载了`Visual Studio.exe`文件之后，注意在选择界面的时候选择`C++`构建工具，当然如果不觉得麻烦，可以一键所有都选择下载安装，一键傻瓜式的安装，无非需要注意的就是如果不想将该软件安装在`C盘`，可以在如下界面时切换安装路径，如我安装在`D盘`的`myeditor/vs`目录。
 
-![vs](./images/vs-install.png)
+![vs](../images/vs-install.png)
 
 点击安装，然后耐心等待安装完成。
 
@@ -75,11 +75,11 @@ $ ./main
 
 现在我们再次定位到`hello,world`目录，输入命令`rustc main.rs`,如果当前目录为我们生成了如下图所示的文件，就表示编译成功。
 
-![编译成功](./images/hello-world-2.png)
+![编译成功](../images/hello-world-2.png)
 
 接下来我们只要输入`./main.exe`，我们可以在`vscode`终端中运行该命令，即可看到打印出`hello,world`的信息，如下图所示:
 
-![print](./images/hello-world-3.png)
+![print](../images/hello-world-3.png)
 
 不管你的操作系统如何，字符串`Hello，world！`都应该打印到终端。如果看不到此输出，请参考[安装](/doc/install)部分的“故障排除”部分，以获取帮助。
 
@@ -143,8 +143,8 @@ main.rs
 
 这里的`/B`指的就是文件名，比如你想要查看`main.rs`，输入`dir main.rs`。如下图所示:
 
-![ls](./images/ls.png)
-![dir](./images/dir.png)
+![ls](../images/ls.png)
+![dir](../images/dir.png)
 
 这显示了带有`.rs`扩展名的源代码文件，可执行文件（在 Windows 上是`main.exe`，在所有其他平台上是`main`），以及在使用 Windows 时，包含一个带有`.pdb`扩展名的调试信息的文件。在这里，运行`main`或`main.exe`文件，如下所示：
 
@@ -154,7 +154,7 @@ $ ./main # or .\main.exe on Windows
 
 如下图所示:
 
-![运行编译文件](./images/compile-file.png)
+![运行编译文件](../images/compile-file.png)
 
 这意味着`./main`或者`./main.exe`命令都是可以正常运行的，相对而言，我比较倾向于前者（省略了后缀名）。如果 main.rs 是你的`hello,world`程序，此行将打印`hello,world!`到你的终端。
 

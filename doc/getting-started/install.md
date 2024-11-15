@@ -83,29 +83,29 @@ Rust 的安装还包括本地文档的副本，因此你可以离线阅读。运
 
 前往官方下载文档，我们可以看到如下图所示：
 
-![安装rust](./images/install-windows.png)
+![安装rust](../images/install-windows.png)
 
 如果你的系统是 32 位则选择 32 位下载，否则选择 64 位下载。然后等待如下程序下载完成：
 
-![rust-init](./images/rustup-init.png)
+![rust-init](../images/rustup-init.png)
 
 下载完成之后，在你的本地磁盘找到该`exe`程序双击并运行。如下图所示:
 
-![rust-init-open](./images/rustup-init-open.png)
+![rust-init-open](../images/rustup-init-open.png)
 
 输入`Y`也就是`yes`进行下一步。
 
-![rust-init-open](./images/rustup-init-open-2.png)
+![rust-init-open](../images/rustup-init-open-2.png)
 
 按`enter`继续下一步，如果有杀毒软件如 360，金山毒霸之类的提示修改特殊系统启动项，请选择允许。然后这是一个漫长的安装过程，耐心等待吧！
 
 当你看到如下图所示，就表示 Rust 安装成功。
 
-![安装成功](./images/rust-install-success.png)
+![安装成功](../images/rust-install-success.png)
 
 输入命令`rustc --version`我们可以看到版本号，如下图所示:
 
-![rust版本](./images/rust-version.jpg)
+![rust版本](../images/rust-version.jpg)
 
 ### 在线编辑器
 
