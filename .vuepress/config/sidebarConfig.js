@@ -94,4 +94,20 @@ module.exports = [
             },
         ]
     },
+    {
+        title: '附录',
+        collapsable: true,
+        children:[
+            {
+                title: '附录A: 关键字',
+                path:"/doc/appendix/appendix-a",
+                collapsable: true
+            },
+            {
+                title: '附录B: 运算符和符号',
+                path:"/doc/appendix/appendix-b",
+                collapsable: true
+            },
+        ]
+    },
 ]
