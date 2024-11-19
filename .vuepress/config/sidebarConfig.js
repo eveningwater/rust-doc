@@ -54,6 +54,11 @@ module.exports = [
                 collapsable: true
             },
             {
+                title: '注释',
+                path:"/doc/common-concept/comments",
+                collapsable: true
+            },
+            {
                 title: '控制流',
                 path:"/doc/common-concept/control-flow",
                 collapsable: true
@@ -106,6 +111,11 @@ module.exports = [
             {
                 title: '附录B: 运算符和符号',
                 path:"/doc/appendix/appendix-b",
+                collapsable: true
+            },
+            {
+                title: '附录C: 可衍生的特征',
+                path:"/doc/appendix/appendix-c",
                 collapsable: true
             },
         ]
