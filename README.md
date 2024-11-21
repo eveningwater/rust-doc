@@ -14,3 +14,5 @@ footer: MIT Licensed | Copyright © 2020-present eveningwater
 ---
 
 推荐一个[Rust入门教程]( https://www.eveningwater.com/docs/index.html?type=rust-course)，前往查看。
+
+> 特别说明: 本文档网站翻译自[Rust 编程语言](https://doc.rust-lang.org/book/title-page.html)书，加入了个人的理解，并一章一章翻译，仅供学习使用。

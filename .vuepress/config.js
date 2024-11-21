@@ -8,7 +8,10 @@ module.exports = {
         ['link', {
             rel: 'icon',
             href: '/logo.svg'
-        }]
+        }],
+        [
+            'script', {type: 'text/javascript', src: 'https://fastly.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/autoload.js'}
+        ]
     ],
     title: 'rust语言中文文档', //网站的标题
     description: '一门赋予每个人构建可靠且高效软件能力的语言。', //网站的描述
