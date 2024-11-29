@@ -97,6 +97,28 @@ module.exports = [
                 path:"/doc/structs/defining-structs",
                 collapsable: true
             },
+            {
+                title: '使用结构体的示例程序',
+                path:"/doc/structs/example-structs",
+                collapsable: true
+            },
+            {
+                title: '方法语法',
+                path:"/doc/structs/method-syntax",
+                collapsable: true
+            },
+        ]
+    },
+    {
+        title: '枚举',
+        path: '/doc/enums/enums', 
+        collapsable: true,
+        children:[
+            {
+                title: '定义一个枚举',
+                path:"/doc/enums/defining-an-enum",
+                collapsable: true
+            }
         ]
     },
     {
