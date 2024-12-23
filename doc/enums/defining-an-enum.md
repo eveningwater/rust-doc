@@ -87,3 +87,79 @@ enum IpAddr {
 let home = IpAddr::V4(127, 0, 0, 1);
 let loopback = IpAddr::V6(String::from("::1"));
 ```
+
+我们已经展示了几种定义数据结构来存储版本 4 和版本 6 IP 地址的不同方法。然而，事实证明，想要存储 IP 地址并编码其类型是如此常见，以至于[标准库有一个我们可以使用的定义](https://doc.rust-lang.org/std/net/enum.IpAddr.html)！让我们看看标准库如何定义 IpAddr：它具有我们定义和使用的确切枚举和变量，但它以两种不同结构的形式将地址数据嵌入到变量中，每个变量的定义不同：
+
+```rust
+#![allow(unused)]
+fn main() {
+    struct Ipv4Addr {
+        // --snip--
+    }
+
+    struct Ipv6Addr {
+        // --snip--
+    }
+
+    enum IpAddr {
+        V4(Ipv4Addr),
+        V6(Ipv6Addr),
+    }
+}
+```
+
+此代码说明，你可以将任何类型的数据放入枚举变量中：例如字符串、数字类型或结构。你甚至可以包含另一个枚举！此外，标准库类型通常不会比你可能想到的复杂得多。
+
+请注意，尽管标准库包含 IpAddr 的定义，但我们仍然可以创建和使用自己的定义而不会发生冲突，因为我们没有将标准库的定义纳入我们的作用域。我们将在第 7 章中进一步讨论如何将类型纳入作用域。
+
+让我们看一下示例 6-2 中的另一个枚举示例：这个示例的变量中嵌入了多种类型。
+
+```rust
+enum Message {
+    Quit,
+    Move { x: i32, y: i32 },
+    Write(String),
+    ChangeColor(i32, i32, i32),
+}
+```
+
+示例 6-2：一个 Message 枚举，其每个变量都存储不同数量和类型的值
+
+此枚举有四种不同类型的变体：
+
+* Quit 根本没有与之关联的数据。
+* Move 有命名字段，就像结构一样。
+* Write 包含单个字符串。
+* ChangeColor 包含三个 i32 值。
+
+定义带有变量的枚举（如示例 6-2 中所示）类似于定义不同类型的结构体定义，只是枚举不使用 struct 关键字，并且所有变体都归入 Message 类型。以下结构体可以保存前面枚举变量保存的相同数据：
+
+```rust
+struct QuitMessage; // unit struct
+struct MoveMessage {
+    x: i32,
+    y: i32,
+}
+struct WriteMessage(String); // tuple struct
+struct ChangeColorMessage(i32, i32, i32); // tuple struct
+```
+
+但是如果我们使用不同的结构体，每个结构体都有自己的类型，我们就无法像示例 6-2 中定义的 Message 枚举那样轻松地定义一个函数来接收任何这些类型的消息，因为它只有一种类型。
+
+枚举和结构之间还有一个相似之处：就像我们能够使用 impl 在结构上定义方法一样，我们也能够在枚举上定义方法。以下是我们可以在我们的 Message 枚举上定义名为 call 的方法：
+
+```rust
+impl Message {
+    fn call(&self) {
+        // method body would be defined here
+    }
+}
+let m = Message::Write(String::from("hello"));
+m.call();
+```
+
+方法主体将使用 self 来获取我们调用该方法时的值。在此示例中，我们创建了一个变量 m，其值为 `Message::Write(String::from("hello"))`，当 m.call() 运行时，self 将会位于 call 方法主体中。
+
+让我们看一下标准库中另一个非常常见且有用的枚举：Option。
+
+### Option Enum 及其相对于 Null 值的优势
