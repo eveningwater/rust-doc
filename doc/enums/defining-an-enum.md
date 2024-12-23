@@ -19,3 +19,71 @@ IpAddrKind 现在是一种自定义数据类型，我们可以在代码的其他
 
 ### 枚举值
 
+我们可以像这样创建 IpAddrKind 的两个变量的实例：
+
+```rust
+let four = IpAddrKind::V4;
+let six = IpAddrKind::V6;
+```
+
+请注意，枚举的变量在其标识符下命名，我们使用双冒号将两者分开。这很有用，因为现在 `IpAddrKind::V4` 和 `IpAddrKind::V6` 这两个值都属于同一类型：`IpAddrKind`。然后，例如，我们可以定义一个接受任何 `IpAddrKind` 的函数：
+
+```rust
+fn route(ip_kind: IpAddrKind) {}
+```
+
+我们可以用以下任一方式调用该函数：
+
+```rust
+route(IpAddrKind::V4);
+route(IpAddrKind::V6);
+```
+
+使用枚举还有更多优势。仔细考虑一下我们的 IP 地址类型，目前我们没有办法存储实际的 IP 地址数据；我们只知道它是什么类型。鉴于你刚刚在第 5 章中学习了结构体，你可能会想用结构体来解决这个问题，如示例 6-1 所示。
+
+```rust
+enum IpAddrKind {
+    V4,
+    V6,
+}
+struct IpAddr {
+    kind: IpAddrKind,
+    address: String,
+}
+let home = IpAddr {
+    kind: IpAddrKind::V4,
+    address: String::from("127.0.0.1"),
+};
+let loopback = IpAddr {
+    kind: IpAddrKind::V6,
+    address: String::from("::1"),
+};
+```
+
+示例 6-1：使用结构体存储 IP 地址的数据和 IpAddrKind 变量
+
+这里，我们定义了一个结构体 IpAddr，它有两个字段：一个类型为 IpAddrKind（我们之前定义的枚举）的 kind 字段和一个类型为 String 的 address 字段。我们有两个此结构体的实例。第一个是 home，它的类型值为 `IpAddrKind::V4`，关联的地址数据为 `127.0.0.1`。第二个实例是 loopback。它的类型值为 IpAddrKind 的另一个变量 V6，关联的地址为 `::1`。我们使用结构体将类型和地址值捆绑在一起，因此现在变量与值相关联。
+
+但是，仅使用枚举来表示相同的概念更为简洁：我们可以将数据直接放入每个枚举变量中，而不是将枚举放在结构体中。IpAddr 枚举的这个新定义表明 V4 和 V6 变量都将具有关联的字符串值：
+
+```rust
+enum IpAddr {
+    V4(String),
+    V6(String),
+}
+let home = IpAddr::V4(String::from("127.0.0.1"));
+let loopback = IpAddr::V6(String::from("::1"));
+```
+
+我们直接将数据附加到枚举的每个变量，因此不需要额外的结构体。在这里，也更容易看到枚举如何工作的另一个细节：我们定义的每个枚举变量的名称也成为构造枚举实例的函数。也就是说，`IpAddr::V4()` 是一个函数调用，它接受一个 String 参数并返回一个 IpAddr 类型的实例。我们自动获得这个构造函数的定义，这是定义枚举的结果。
+
+使用枚举而不是结构还有另一个优势：每个变量可以具有不同类型和数量的关联数据。版本 4 IP 地址将始终具有四个数字组件，其值介于 0 到 255 之间。如果我们想将 V4 地址存储为四个 u8 值，但仍将 V6 地址表示为一个字符串值，则无法使用结构体。枚举可以轻松处理这种情况：
+
+```rust
+enum IpAddr {
+    V4(u8, u8, u8, u8),
+    V6(String),
+}
+let home = IpAddr::V4(127, 0, 0, 1);
+let loopback = IpAddr::V6(String::from("::1"));
+```
