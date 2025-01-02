@@ -118,6 +118,11 @@ module.exports = [
                 title: '定义一个枚举',
                 path:"/doc/enums/defining-an-enum",
                 collapsable: true
+            },
+            {
+                title: 'match控制流',
+                path:"/doc/enums/match",
+                collapsable: true
             }
         ]
     },
