@@ -123,6 +123,11 @@ module.exports = [
                 title: 'match控制流',
                 path:"/doc/enums/match",
                 collapsable: true
+            },
+            {
+                title: '使用if let语法简化控制流',
+                path:"/doc/enums/if-let",
+                collapsable: true
             }
         ]
     },
