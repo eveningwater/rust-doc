@@ -132,6 +132,23 @@ module.exports = [
         ]
     },
     {
+        title: '使用包、依赖箱和模块管理不断增长的项目',
+        path: '/doc/packages-crates-and-modules/packages-crates-and-modules', 
+        collapsable: true,
+        children:[
+            {
+                title: '包与依赖箱',
+                path:"/doc/packages-crates-and-modules/packages-and-crates",
+                collapsable: true
+            },
+            {
+                title: '定义模块以控制上下文和私有作用域',
+                path:"/doc/packages-crates-and-modules/defining-modules",
+                collapsable: true
+            },
+        ]
+    },
+    {
         title: '附录',
         collapsable: true,
         children:[
