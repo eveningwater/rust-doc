@@ -146,6 +146,11 @@ module.exports = [
                 path:"/doc/packages-crates-and-modules/defining-modules",
                 collapsable: true
             },
+            {
+                title: '引用模块树中项目的路径',
+                path:"/doc/packages-crates-and-modules/paths-for-referring-to",
+                collapsable: true   
+            }
         ]
     },
     {
