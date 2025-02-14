@@ -1,0 +1,33 @@
+name: Deploy my-poem-website
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Set up Git config
+        run: |
+          git config --global user.email "854806732@qq.com"
+          git config --global user.name "eveningwater"
+      - name: Configure Git to use token
+        run: git remote set-url origin https://eveningwater:${{ secrets.RUST_DOC_GH_TOKEN }}@github.com/eveningwater/my-poem-website.git
+
+      - name: Deploy to GitHub Pages
+        run: npm run deploy
+        env:
+          GH_TOKEN: ${{ secrets.RUST_DOC_GH_TOKEN }}
