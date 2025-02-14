@@ -1,4 +1,4 @@
-name: Deploy my-poem-website
+name: Deploy rust-doc
 
 on:
   push:
@@ -25,7 +25,7 @@ jobs:
           git config --global user.email "854806732@qq.com"
           git config --global user.name "eveningwater"
       - name: Configure Git to use token
-        run: git remote set-url origin https://eveningwater:${{ secrets.RUST_DOC_GH_TOKEN }}@github.com/eveningwater/my-poem-website.git
+        run: git remote set-url origin https://eveningwater:${{ secrets.RUST_DOC_GH_TOKEN }}@github.com/eveningwater/rust-doc.git
 
       - name: Deploy to GitHub Pages
         run: npm run deploy
