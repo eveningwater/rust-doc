@@ -150,6 +150,16 @@ module.exports = [
                 title: '引用模块树中项目的路径',
                 path:"/doc/packages-crates-and-modules/paths-for-referring-to",
                 collapsable: true   
+            },
+            {
+                title: '使用 use 关键字将路径纳入上下文',
+                path:"/doc/packages-crates-and-modules/bringing-paths",
+                collapsable: true   
+            },
+            {
+                title: '将模块分成不同的文件',
+                path:"/doc/packages-crates-and-modules/separating",
+                collapsable: true   
             }
         ]
     },
