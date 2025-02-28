@@ -191,7 +191,7 @@ pub fn eat_at_restaurant() {
 
 通过在路径开头使用 super，我们可以构造从父模块而不是当前模块或包根开始的相对路径。这就像使用 `..` 语法开始文件系统路径一样。使用 super 允许我们引用我们知道在父模块中的项目，当模块与父模块密切相关但父模块可能有一天会移动到模块树的其他位置时，这可以使重新排列模块树更容易。
 
-考虑清单 7-8 中的代码，该代码模拟了厨师修复错误订单并亲自将其带给客户的情况。back_of_house 模块中定义的函数 fix_incorrect_order 通过指定 deliver_order 的路径（以 super 开头）来调用父模块中定义的函数 deliver_order。
+考虑示例 7-8 中的代码，该代码模拟了厨师修复错误订单并亲自将其带给客户的情况。back_of_house 模块中定义的函数 fix_incorrect_order 通过指定 deliver_order 的路径（以 super 开头）来调用父模块中定义的函数 deliver_order。
 
 文件名：src/lib.rs
 
@@ -253,7 +253,7 @@ pub fn eat_at_restaurant() {
 
 另请注意，由于 back_of_house::Breakfast 有一个私有字段，因此该结构需要提供一个公共关联函数来构造 Breakfast 的实例（我们在这里将其命名为 summer）。如果 Breakfast 没有这样的函数，我们就无法在 eat_at_restaurant 中创建 Breakfast 的实例，因为我们无法设置 eat_at_restaurant 中私有 seasonal_fruit 字段的值。
 
-相反，如果我们将枚举设为公共，则其所有变体都是公共的。我们只需要在 enum 关键字前加上 pub，如清单 7-10 所示。
+相反，如果我们将枚举设为公共，则其所有变体都是公共的。我们只需要在 enum 关键字前加上 pub，如示例 7-10 所示。
 
 文件名： src/lib.rs
 
