@@ -173,6 +173,11 @@ module.exports = [
         path: "/doc/common-collections/vectors",
         collapsable: true,
       },
+      {
+        title: "使用字符串存储文本",
+        path: "/doc/common-collections/strings",
+        collapsable: true,
+      },
     ],
   },
   {
