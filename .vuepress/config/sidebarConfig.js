@@ -179,7 +179,7 @@ module.exports = [
         collapsable: true,
       },
       {
-        title: "使用字符串存储 UTF-8 编码的文本",
+        title: "在哈希映射中存储键值对",
         path: "/doc/common-collections/hash-maps",
         collapsable: true,
       },
