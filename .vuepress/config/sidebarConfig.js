@@ -174,8 +174,13 @@ module.exports = [
         collapsable: true,
       },
       {
-        title: "使用字符串存储文本",
+        title: "使用字符串存储 UTF-8 编码的文本",
         path: "/doc/common-collections/strings",
+        collapsable: true,
+      },
+      {
+        title: "使用字符串存储 UTF-8 编码的文本",
+        path: "/doc/common-collections/hash-maps",
         collapsable: true,
       },
     ],
