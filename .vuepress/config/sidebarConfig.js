@@ -186,6 +186,18 @@ module.exports = [
     ],
   },
   {
+    title: "错误处理",
+    path: "/doc/error-handling/error-handling",
+    collapsable: true,
+    children: [
+      {
+        title: "使用 panic! 处理不可恢复的错误",
+        path: "/doc/error-handling/unrecoverable-errors-with-panic",
+        collapsable: true,
+      },
+    ],
+  },
+  {
     title: "附录",
     collapsable: true,
     children: [
