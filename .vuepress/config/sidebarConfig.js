@@ -195,6 +195,11 @@ module.exports = [
         path: "/doc/error-handling/unrecoverable-errors-with-panic",
         collapsable: true,
       },
+      {
+        title: "可恢复错误及结果",
+        path: "/doc/error-handling/recoverable-errors-with-result",
+        collapsable: true,
+      },
     ],
   },
   {
