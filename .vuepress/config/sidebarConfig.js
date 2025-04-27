@@ -200,6 +200,11 @@ module.exports = [
         path: "/doc/error-handling/recoverable-errors-with-result",
         collapsable: true,
       },
+      {
+        title: "要 panic! 还是不要 panic!",
+        path: "/doc/error-handling/to-panic-or-not-to-panic",
+        collapsable: true,
+      },
     ],
   },
   {
