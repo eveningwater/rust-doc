@@ -208,6 +208,18 @@ module.exports = [
     ],
   },
   {
+    title: "泛型类型、特性和生命周期",
+    path: "/doc/generics/generics",
+    collapsable: true,
+    children: [
+      {
+        title: "泛型数据类型",
+        path: "/doc/generics/generic-syntax",
+        collapsable: true,
+      },
+    ],
+  },
+  {
     title: "附录",
     collapsable: true,
     children: [
