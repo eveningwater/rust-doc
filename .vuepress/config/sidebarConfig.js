@@ -217,6 +217,11 @@ module.exports = [
         path: "/doc/generics/generic-syntax",
         collapsable: true,
       },
+      {
+        title: "特性（Traits）：定义共享行为",
+        path: "/doc/generics/traits",
+        collapsable: true,
+      },
     ],
   },
   {
