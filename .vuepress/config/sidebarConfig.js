@@ -222,6 +222,11 @@ module.exports = [
         path: "/doc/generics/traits",
         collapsable: true,
       },
+      {
+        title: "使用生命周期验证引用",
+        path: "/doc/generics/lifetime-syntax",
+        collapsable: true,
+      },
     ],
   },
   {
