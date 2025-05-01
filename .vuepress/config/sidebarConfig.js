@@ -230,6 +230,18 @@ module.exports = [
     ],
   },
   {
+    title: "测试",
+    path: "/doc/testing/testing",
+    collapsable: true,
+    children: [
+      {
+        title: "编写测试",
+        path: "/doc/testing/writing-tests",
+        collapsable: true,
+      },
+    ],
+  },
+  {
     title: "附录",
     collapsable: true,
     children: [
