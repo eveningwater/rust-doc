@@ -239,6 +239,11 @@ module.exports = [
         path: "/doc/testing/writing-tests",
         collapsable: true,
       },
+      {
+        title: "运行测试",
+        path: "/doc/testing/running-tests",
+        collapsable: true,
+      },
     ],
   },
   {
