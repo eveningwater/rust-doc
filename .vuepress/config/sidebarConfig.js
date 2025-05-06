@@ -244,6 +244,11 @@ module.exports = [
         path: "/doc/testing/running-tests",
         collapsable: true,
       },
+      {
+        title: "测试的组织结构",
+        path: "/doc/testing/test-organization",
+        collapsable: true,
+      },
     ],
   },
   {
