@@ -252,6 +252,18 @@ module.exports = [
     ],
   },
   {
+    title: "I/O 项目：构建命令行程序",
+    path: "/doc/an-io-project/an-io-project",
+    collapsable: true,
+    children: [
+      {
+        title: "接受命令行参数",
+        path: "/doc/an-io-project/accepting-command-line-arguments",
+        collapsable: true,
+      },
+    ],
+  },
+  {
     title: "附录",
     collapsable: true,
     children: [
