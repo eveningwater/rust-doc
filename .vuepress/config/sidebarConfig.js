@@ -261,6 +261,11 @@ module.exports = [
         path: "/doc/an-io-project/accepting-command-line-arguments",
         collapsable: true,
       },
+      {
+        title: "读取文件",
+        path: "/doc/an-io-project/reading-a-file",
+        collapsable: true,
+      },
     ],
   },
   {
