@@ -266,6 +266,11 @@ module.exports = [
         path: "/doc/an-io-project/reading-a-file",
         collapsable: true,
       },
+      {
+        title: "重构以提高模块化和错误处理",
+        path: "/doc/an-io-project/improving-error-handling-and-modularity",
+        collapsable: true,
+      },
     ],
   },
   {
