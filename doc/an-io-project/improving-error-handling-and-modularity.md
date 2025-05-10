@@ -68,3 +68,58 @@ fn parse_config(args: &[String]) -> (&str, &str) {
 对于我们的小程序来说，这种重构可能看起来有些过度，但我们正在以小的、渐进的步骤进行重构。在做出这个改变后，再次运行程序以验证参数解析仍然有效。经常检查你的进展是很好的，这有助于在问题发生时识别原因。
 
 #### 分组配置值
+
+我们可以再进一步改进`parse_config`函数。目前，我们返回一个元组，但随后立即将该元组分解为单独的部分。这表明我们可能还没有找到正确的抽象方式。
+
+另一个表明有改进空间的指标是`parse_config`中的`config`部分，它暗示我们返回的两个值是相关的，并且都是一个配置值的一部分。我们目前没有在数据结构中传达这种含义，除了将两个值分组到一个元组中；我们将改为把这两个值放入一个结构体中，并给每个结构体字段一个有意义的名称。这样做将使未来这段代码的维护者更容易理解不同值之间的关系以及它们的用途。
+
+清单 12-6 展示了对`parse_config`函数的改进。
+
+文件名：src/main.rs:
+
+```rust
+use std::env;
+use std::fs;
+
+fn main() {
+    let args: Vec<String> = env::args().collect();
+
+    let config = parse_config(&args);
+
+    println!("Searching for {}", config.query);
+    println!("In file {}", config.file_path);
+
+    let contents = fs::read_to_string(config.file_path)
+        .expect("Should have been able to read the file");
+
+    // --snip--
+
+    println!("With text:\n{contents}");
+}
+
+struct Config {
+    query: String,
+    file_path: String,
+}
+
+fn parse_config(args: &[String]) -> Config {
+    let query = args[1].clone();
+    let file_path = args[2].clone();
+
+    Config { query, file_path }
+}
+```
+
+清单 12-6：重构`parse_config`以返回`Config`结构体的实例
+
+我们添加了一个名为`Config`的结构体，定义了名为`query`和`file_path`的字段。`parse_config`的签名现在表明它返回一个`Config`值。在`parse_config`的函数体中，我们之前返回的是引用`args`中`String`值的字符串切片，现在我们定义`Config`包含拥有所有权的`String`值。`main`中的`args`变量是参数值的所有者，只是让`parse_config`函数借用它们，这意味着如果`Config`尝试获取`args`中值的所有权，我们将违反 Rust 的借用规则。
+
+我们有多种方式可以管理`String`数据；最简单的方法，尽管效率略低，是对值调用`clone`方法。这将为`Config`实例创建数据的完整副本以拥有所有权，这比存储对字符串数据的引用需要更多的时间和内存。然而，克隆数据也使我们的代码非常直接，因为我们不必管理引用的生命周期；在这种情况下，放弃一点性能以获得简单性是值得的权衡。
+
+> ### 使用`clone`的权衡
+>
+> 许多 Rust 程序员倾向于避免使用 clone 来解决所有权问题，因为它的运行时成本。在第 13 章中，你将学习如何在这种情况下使用更高效的方法。但现在，复制几个字符串以继续取得进展是可以的，因为你只会复制一次，而且你的文件路径和查询字符串非常小。拥有一个稍微低效但能正常工作的程序比在第一次尝试时就试图过度优化代码要好。随着你对 Rust 的经验增加，开始使用最高效的解决方案会变得更容易，但现在，调用 clone 是完全可以接受的。
+
+我们已经更新了`main`，使其将`parse_config`返回的`Config`实例放入名为`config`的变量中，并且我们更新了之前使用单独的`query`和`file_path`变量的代码，使其现在使用`Config`结构体上的字段。
+
+现在我们的代码更清晰地表达了`query`和`file_path`是相关的，它们的目的是配置程序的工作方式。任何使用这些值的代码都知道在`config`实例中按照它们的用途命名的字段中找到它们。
