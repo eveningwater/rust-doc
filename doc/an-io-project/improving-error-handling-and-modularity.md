@@ -123,3 +123,52 @@ fn parse_config(args: &[String]) -> Config {
 我们已经更新了`main`，使其将`parse_config`返回的`Config`实例放入名为`config`的变量中，并且我们更新了之前使用单独的`query`和`file_path`变量的代码，使其现在使用`Config`结构体上的字段。
 
 现在我们的代码更清晰地表达了`query`和`file_path`是相关的，它们的目的是配置程序的工作方式。任何使用这些值的代码都知道在`config`实例中按照它们的用途命名的字段中找到它们。
+
+#### 为 Config 创建一个构造函数
+
+到目前为止，我们已经从 `main` 中提取出负责解析命令行参数的逻辑，并将其放在 `parse_config` 函数中。这样做帮助我们看到 `query` 和 `file_path` 值是相关的，这种关系应该在我们的代码中表达出来。然后我们添加了一个 `Config` 结构体来命名 `query` 和 `file_path` 的相关用途，并能够从 `parse_config` 函数返回值的名称作为结构体字段名。
+
+既然 `parse_config` 函数的目的是创建一个 `Config` 实例，我们可以将 `parse_config` 从一个普通函数更改为与 `Config` 结构体关联的名为 `new` 的函数。进行这种更改将使代码更加符合惯用法。我们可以通过调用 `String::new` 来创建标准库中类型的实例，例如 `String`。类似地，通过将 `parse_config` 更改为与 `Config` 关联的 `new` 函数，我们将能够通过调用 `Config::new` 来创建 `Config` 的实例。清单 12-7 显示了我们需要进行的更改。
+
+文件名：src/main.rs：
+
+```rust
+use std::env;
+use std::fs;
+
+fn main() {
+    let args: Vec<String> = env::args().collect();
+
+    let config = Config::new(&args);
+
+    println!("Searching for {}", config.query);
+    println!("In file {}", config.file_path);
+
+    let contents = fs::read_to_string(config.file_path)
+        .expect("Should have been able to read the file");
+
+    println!("With text:\n{contents}");
+
+    // --snip--
+}
+
+// --snip--
+
+struct Config {
+    query: String,
+    file_path: String,
+}
+
+impl Config {
+    fn new(args: &[String]) -> Config {
+        let query = args[1].clone();
+        let file_path = args[2].clone();
+
+        Config { query, file_path }
+    }
+}
+```
+
+清单 12-7：将 `parse_config` 更改为 `Config::new`
+
+我们已经更新了 `main`，将原来调用 `parse_config` 的地方改为调用 `Config::new`。我们将 `parse_config` 的名称更改为 `new` 并将其移到 `impl` 块中，这将 `new` 函数与 `Config` 关联起来。再次编译此代码以确保它能正常工作。
