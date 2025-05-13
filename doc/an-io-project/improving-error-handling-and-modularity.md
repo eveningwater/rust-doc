@@ -172,3 +172,82 @@ impl Config {
 清单 12-7：将 `parse_config` 更改为 `Config::new`
 
 我们已经更新了 `main`，将原来调用 `parse_config` 的地方改为调用 `Config::new`。我们将 `parse_config` 的名称更改为 `new` 并将其移到 `impl` 块中，这将 `new` 函数与 `Config` 关联起来。再次编译此代码以确保它能正常工作。
+
+### 修复错误处理
+
+现在我们将修复错误处理。回想一下，如果向量中的项目少于三个，尝试访问 `args` 向量中索引 1 或索引 2 的值将导致程序崩溃。尝试不带任何参数运行程序；它看起来像这样：
+
+```rust
+$ cargo run
+   Compiling minigrep v0.1.0 (file:///projects/minigrep)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.0s
+     Running `target/debug/minigrep`
+thread 'main' panicked at src/main.rs:27:21:
+index out of bounds: the len is 1 but the index is 1
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+```
+
+行 `index out of bounds: the len is 1 but the index is 1` 是一个面向程序员的错误消息。它不会帮助我们的最终用户理解他们应该做什么。现在让我们来修复这个问题。
+
+#### 改进错误消息
+
+在清单 12-8 中，我们在 `new` 函数中添加了一个检查，它将在访问索引 1 和索引 2 之前验证切片是否足够长。如果切片不够长，程序会崩溃并显示一个更好的错误消息。
+
+文件名：src/main.rs：
+
+```rust
+use std::env;
+use std::fs;
+
+fn main() {
+    let args: Vec<String> = env::args().collect();
+
+    let config = Config::new(&args);
+
+    println!("Searching for {}", config.query);
+    println!("In file {}", config.file_path);
+
+    let contents = fs::read_to_string(config.file_path)
+        .expect("Should have been able to read the file");
+
+    println!("With text:\n{contents}");
+}
+
+struct Config {
+    query: String,
+    file_path: String,
+}
+
+impl Config {
+    // --snip--
+    fn new(args: &[String]) -> Config {
+        if args.len() < 3 {
+            panic!("not enough arguments");
+        }
+        // --snip--
+
+        let query = args[1].clone();
+        let file_path = args[2].clone();
+
+        Config { query, file_path }
+    }
+}
+```
+
+清单 12-8：添加对参数数量的检查
+
+这段代码类似于我们在清单 9-13 中编写的 [Guess::new 函数](../error-handling/to-panic-or-not-to-panic#创建用于验证的自定义类型)，当 `value` 参数超出有效值范围时，我们调用了 `panic!`。这里我们不是检查值的范围，而是检查 `args` 的长度是否至少为 3，函数的其余部分可以在假设这个条件已经满足的情况下运行。如果 `args` 的项目少于三个，这个条件将为`true`，我们调用 `panic!` 宏立即结束程序。
+
+在 `new` 中添加这几行额外的代码后，让我们再次不带任何参数运行程序，看看错误现在是什么样子：
+
+```rust
+$ cargo run
+   Compiling minigrep v0.1.0 (file:///projects/minigrep)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.0s
+     Running `target/debug/minigrep`
+thread 'main' panicked at src/main.rs:26:13:
+not enough arguments
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+```
+
+这个输出更好：我们现在有了一个合理的错误消息。然而，我们也有不想提供给用户的额外信息。也许我们在清单 9-13 中使用的技术在这里不是最好的：正如[第 9 章中讨论](../error-handling/to-panic-or-not-to-panic#错误处理的指导原则)的，`panic!`调用更适合于编程问题而不是使用问题。相反，我们将使用你在第 9 章中学到的另一种技术——返回一个表示成功或错误的 [Result](../error-handling/recoverable-errors-with-result)。
