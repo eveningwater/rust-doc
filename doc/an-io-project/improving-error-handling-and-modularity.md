@@ -73,7 +73,7 @@ fn parse_config(args: &[String]) -> (&str, &str) {
 
 另一个表明有改进空间的指标是`parse_config`中的`config`部分，它暗示我们返回的两个值是相关的，并且都是一个配置值的一部分。我们目前没有在数据结构中传达这种含义，除了将两个值分组到一个元组中；我们将改为把这两个值放入一个结构体中，并给每个结构体字段一个有意义的名称。这样做将使未来这段代码的维护者更容易理解不同值之间的关系以及它们的用途。
 
-清单 12-6 展示了对`parse_config`函数的改进。
+示例 12-6 展示了对`parse_config`函数的改进。
 
 文件名：src/main.rs:
 
@@ -110,7 +110,7 @@ fn parse_config(args: &[String]) -> Config {
 }
 ```
 
-清单 12-6：重构`parse_config`以返回`Config`结构体的实例
+示例 12-6：重构`parse_config`以返回`Config`结构体的实例
 
 我们添加了一个名为`Config`的结构体，定义了名为`query`和`file_path`的字段。`parse_config`的签名现在表明它返回一个`Config`值。在`parse_config`的函数体中，我们之前返回的是引用`args`中`String`值的字符串切片，现在我们定义`Config`包含拥有所有权的`String`值。`main`中的`args`变量是参数值的所有者，只是让`parse_config`函数借用它们，这意味着如果`Config`尝试获取`args`中值的所有权，我们将违反 Rust 的借用规则。
 
@@ -128,7 +128,7 @@ fn parse_config(args: &[String]) -> Config {
 
 到目前为止，我们已经从 `main` 中提取出负责解析命令行参数的逻辑，并将其放在 `parse_config` 函数中。这样做帮助我们看到 `query` 和 `file_path` 值是相关的，这种关系应该在我们的代码中表达出来。然后我们添加了一个 `Config` 结构体来命名 `query` 和 `file_path` 的相关用途，并能够从 `parse_config` 函数返回值的名称作为结构体字段名。
 
-既然 `parse_config` 函数的目的是创建一个 `Config` 实例，我们可以将 `parse_config` 从一个普通函数更改为与 `Config` 结构体关联的名为 `new` 的函数。进行这种更改将使代码更加符合惯用法。我们可以通过调用 `String::new` 来创建标准库中类型的实例，例如 `String`。类似地，通过将 `parse_config` 更改为与 `Config` 关联的 `new` 函数，我们将能够通过调用 `Config::new` 来创建 `Config` 的实例。清单 12-7 显示了我们需要进行的更改。
+既然 `parse_config` 函数的目的是创建一个 `Config` 实例，我们可以将 `parse_config` 从一个普通函数更改为与 `Config` 结构体关联的名为 `new` 的函数。进行这种更改将使代码更加符合惯用法。我们可以通过调用 `String::new` 来创建标准库中类型的实例，例如 `String`。类似地，通过将 `parse_config` 更改为与 `Config` 关联的 `new` 函数，我们将能够通过调用 `Config::new` 来创建 `Config` 的实例。示例 12-7 显示了我们需要进行的更改。
 
 文件名：src/main.rs：
 
@@ -169,7 +169,7 @@ impl Config {
 }
 ```
 
-清单 12-7：将 `parse_config` 更改为 `Config::new`
+示例 12-7：将 `parse_config` 更改为 `Config::new`
 
 我们已经更新了 `main`，将原来调用 `parse_config` 的地方改为调用 `Config::new`。我们将 `parse_config` 的名称更改为 `new` 并将其移到 `impl` 块中，这将 `new` 函数与 `Config` 关联起来。再次编译此代码以确保它能正常工作。
 
@@ -191,7 +191,7 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 #### 改进错误消息
 
-在清单 12-8 中，我们在 `new` 函数中添加了一个检查，它将在访问索引 1 和索引 2 之前验证切片是否足够长。如果切片不够长，程序会崩溃并显示一个更好的错误消息。
+在示例 12-8 中，我们在 `new` 函数中添加了一个检查，它将在访问索引 1 和索引 2 之前验证切片是否足够长。如果切片不够长，程序会崩溃并显示一个更好的错误消息。
 
 文件名：src/main.rs：
 
@@ -234,9 +234,9 @@ impl Config {
 }
 ```
 
-清单 12-8：添加对参数数量的检查
+示例 12-8：添加对参数数量的检查
 
-这段代码类似于我们在清单 9-13 中编写的 [Guess::new 函数](../error-handling/to-panic-or-not-to-panic#创建用于验证的自定义类型)，当 `value` 参数超出有效值范围时，我们调用了 `panic!`。这里我们不是检查值的范围，而是检查 `args` 的长度是否至少为 3，函数的其余部分可以在假设这个条件已经满足的情况下运行。如果 `args` 的项目少于三个，这个条件将为`true`，我们调用 `panic!` 宏立即结束程序。
+这段代码类似于我们在示例 9-13 中编写的 [Guess::new 函数](../error-handling/to-panic-or-not-to-panic#创建用于验证的自定义类型)，当 `value` 参数超出有效值范围时，我们调用了 `panic!`。这里我们不是检查值的范围，而是检查 `args` 的长度是否至少为 3，函数的其余部分可以在假设这个条件已经满足的情况下运行。如果 `args` 的项目少于三个，这个条件将为`true`，我们调用 `panic!` 宏立即结束程序。
 
 在 `new` 中添加这几行额外的代码后，让我们再次不带任何参数运行程序，看看错误现在是什么样子：
 
@@ -250,4 +250,122 @@ not enough arguments
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 ```
 
-这个输出更好：我们现在有了一个合理的错误消息。然而，我们也有不想提供给用户的额外信息。也许我们在清单 9-13 中使用的技术在这里不是最好的：正如[第 9 章中讨论](../error-handling/to-panic-or-not-to-panic#错误处理的指导原则)的，`panic!`调用更适合于编程问题而不是使用问题。相反，我们将使用你在第 9 章中学到的另一种技术——返回一个表示成功或错误的 [Result](../error-handling/recoverable-errors-with-result)。
+这个输出更好：我们现在有了一个合理的错误消息。然而，我们也有不想提供给用户的额外信息。也许我们在示例 9-13 中使用的技术在这里不是最好的：正如[第 9 章中讨论](../error-handling/to-panic-or-not-to-panic#错误处理的指导原则)的，`panic!`调用更适合于编程问题而不是使用问题。相反，我们将使用你在第 9 章中学到的另一种技术——返回一个表示成功或错误的 [Result](../error-handling/recoverable-errors-with-result)。
+
+#### 返回 `Result` 而不是调用 `panic!`
+
+我们可以改为返回一个 `Result` 值，在成功的情况下它将包含一个 `Config` 实例，在错误的情况下它将描述问题。我们还将函数名从 `new` 改为 `build`，因为许多程序员期望 `new` 函数永远不会失败。当 `Config::build` 与 `main` 通信时，我们可以使用 `Result` 类型来表示出现了问题。然后我们可以更改 `main` 将 `Err` 变体转换为对我们的用户来说更实用的错误，而不会出现调用 `panic!` 导致的关于 `thread 'main'` 和 `RUST_BACKTRACE` 的周围文本。
+
+示例 12-9 显示了我们需要对现在称为 `Config::build` 的函数的返回值以及需要返回 `Result` 的函数体进行的更改。请注意，在我们更新 `main` 之前，这不会编译，我们将在下一个示例中进行更新。
+
+文件名：src/main.rs：
+
+```rust
+use std::env;
+use std::fs;
+
+fn main() {
+    let args: Vec<String> = env::args().collect();
+
+    let config = Config::new(&args);
+
+    println!("Searching for {}", config.query);
+    println!("In file {}", config.file_path);
+
+    let contents = fs::read_to_string(config.file_path)
+        .expect("Should have been able to read the file");
+
+    println!("With text:\n{contents}");
+}
+
+struct Config {
+    query: String,
+    file_path: String,
+}
+
+impl Config {
+    fn build(args: &[String]) -> Result<Config, &'static str> {
+        if args.len() < 3 {
+            return Err("not enough arguments");
+        }
+
+        let query = args[1].clone();
+        let file_path = args[2].clone();
+
+        Ok(Config { query, file_path })
+    }
+}
+```
+
+示例 12-9：从 `Config::build` 返回 `Result`
+
+我们的 `build` 函数返回一个 `Result`，在成功的情况下包含一个 `Config` 实例，在错误的情况下包含一个字符串字面量。我们的错误值将始终是具有 `'static` 生命周期的字符串字面量。
+
+我们在函数体中做了两处更改：当用户没有传递足够的参数时，我们现在返回一个 `Err` 值，而不是调用 `panic!`，并且我们将 `Config` 返回值包装在 `Ok` 中。这些更改使函数符合其新的类型签名。
+
+从 `Config::build` 返回 `Err` 值允许 `main` 函数处理从 build 函数返回的 `Result` 值，并在错误情况下更干净地退出进程。
+
+#### 调用 `Config::build` 并处理错误
+
+为了处理错误情况并打印用户友好的消息，我们需要更新 main 来处理 Config::build 返回的 Result，如示例 12-10 所示。我们还将从 panic! 中移除以非零错误代码退出命令行工具的责任，而是手动实现它。非零退出状态是一种约定，用于向调用我们程序的进程发出信号，表明程序以错误状态退出。
+
+文件名：src/main.rs：
+
+```rust
+use std::env;
+use std::fs;
+use std::process;
+
+fn main() {
+    let args: Vec<String> = env::args().collect();
+
+    let config = Config::build(&args).unwrap_or_else(|err| {
+        println!("Problem parsing arguments: {err}");
+        process::exit(1);
+    });
+
+    // --snip--
+
+    println!("Searching for {}", config.query);
+    println!("In file {}", config.file_path);
+
+    let contents = fs::read_to_string(config.file_path)
+        .expect("Should have been able to read the file");
+
+    println!("With text:\n{contents}");
+}
+
+struct Config {
+    query: String,
+    file_path: String,
+}
+
+impl Config {
+    fn build(args: &[String]) -> Result<Config, &'static str> {
+        if args.len() < 3 {
+            return Err("not enough arguments");
+        }
+
+        let query = args[1].clone();
+        let file_path = args[2].clone();
+
+        Ok(Config { query, file_path })
+    }
+}
+```
+
+示例 12-10：如果构建 `Config` 失败则以错误代码退出
+
+在这个示例中，我们使用了一个我们尚未详细介绍的方法：`unwrap_or_else`，它由标准库在 `Result<T, E>` 上定义。使用 `unwrap_or_else` 允许我们定义一些自定义的、非 `panic!` 错误处理。如果 `Result` 是一个 `Ok` 值，这个方法的行为类似于 `unwrap`：它返回 `Ok` 包装的内部值。然而，如果值是一个 `Err` 值，这个方法会调用闭包中的代码，闭包是我们定义并作为参数传递给 `unwrap_or_else` 的匿名函数。我们将在第 13 章中更详细地介绍闭包。现在，你只需要知道 `unwrap_or_else` 会将 `Err` 的内部值（在这种情况下是我们在示例 12-9 中添加的静态字符串 `"not enough arguments"`）传递给我们的闭包，在参数 `err` 中，它出现在竖线之间。闭包中的代码可以在运行时使用 `err` 值。
+
+我们添加了一个新的 `use` 行，将标准库中的 `process` 引入作用域。在错误情况下将运行的闭包中的代码只有两行：我们打印 `err` 值，然后调用 `process::exit`。`process::exit` 函数将立即停止程序并返回作为退出状态代码传递的数字。这类似于我们在示例 12-8 中使用的基于 `panic!` 的处理，但我们不再获得所有额外的输出。让我们试一试：
+
+```rust
+$ cargo run
+   Compiling minigrep v0.1.0 (file:///projects/minigrep)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.48s
+     Running `target/debug/minigrep`
+Problem parsing arguments: not enough arguments
+```
+
+太好了！这个输出对我们的用户来说更友好。
