@@ -307,7 +307,7 @@ impl Config {
 
 #### 调用 `Config::build` 并处理错误
 
-为了处理错误情况并打印用户友好的消息，我们需要更新 main 来处理 Config::build 返回的 Result，如示例 12-10 所示。我们还将从 panic! 中移除以非零错误代码退出命令行工具的责任，而是手动实现它。非零退出状态是一种约定，用于向调用我们程序的进程发出信号，表明程序以错误状态退出。
+为了处理错误情况并打印用户友好的消息，我们需要更新 main 来处理 `Config::build` 返回的 Result，如示例 12-10 所示。我们还将从 panic! 中移除以非零错误代码退出命令行工具的责任，而是手动实现它。非零退出状态是一种约定，用于向调用我们程序的进程发出信号，表明程序以错误状态退出。
 
 文件名：src/main.rs：
 
@@ -369,3 +369,319 @@ Problem parsing arguments: not enough arguments
 ```
 
 太好了！这个输出对我们的用户来说更友好。
+
+### 从 `main` 中提取逻辑
+
+现在我们已经完成了配置解析的重构，让我们转向程序的逻辑。正如我们在"[二进制项目的关注点分离](#二进制项目的关注点分离)"中所述，我们将提取一个名为 `run` 的函数，它将包含当前在 `main` 函数中的所有逻辑，这些逻辑与设置配置或处理错误无关。当我们完成后，`main` 将变得简洁且易于通过检查进行验证，我们将能够为所有其他逻辑编写测试。
+
+示例 12-11 显示了提取的 `run` 函数。目前，我们只是在进行提取函数的小幅增量改进。我们仍然在 src/main.rs 中定义该函数。
+
+文件名：src/main.rs：
+
+```rust
+use std::env;
+use std::fs;
+use std::process;
+
+fn main() {
+    // --snip--
+
+    let args: Vec<String> = env::args().collect();
+
+    let config = Config::build(&args).unwrap_or_else(|err| {
+        println!("Problem parsing arguments: {err}");
+        process::exit(1);
+    });
+
+    println!("Searching for {}", config.query);
+    println!("In file {}", config.file_path);
+
+    run(config);
+}
+
+fn run(config: Config) {
+    let contents = fs::read_to_string(config.file_path)
+        .expect("Should have been able to read the file");
+
+    println!("With text:\n{contents}");
+}
+
+// --snip--
+
+struct Config {
+    query: String,
+    file_path: String,
+}
+
+impl Config {
+    fn build(args: &[String]) -> Result<Config, &'static str> {
+        if args.len() < 3 {
+            return Err("not enough arguments");
+        }
+
+        let query = args[1].clone();
+        let file_path = args[2].clone();
+
+        Ok(Config { query, file_path })
+    }
+}
+```
+
+示例 12-11：提取包含程序其余逻辑的 `run` 函数
+
+`run` 函数现在包含了 `main` 中的所有剩余逻辑，从读取文件开始。`run` 函数将 Config 实例作为参数。
+
+#### 从 `run` 函数返回错误
+
+随着剩余程序逻辑被分离到 `run` 函数中，我们可以改进错误处理，就像我们在示例 12-9 中对 `Config::build` 所做的那样。不是通过调用 `expect` 让程序崩溃，`run` 函数将在出错时返回 `Result<T, E>`。这将让我们能够以用户友好的方式进一步将处理错误的逻辑整合到 `main` 中。示例 12-12 显示了我们需要对 `run` 的签名和函数体进行的更改。
+
+文件名：src/main.rs：
+
+```rust
+use std::env;
+use std::fs;
+use std::process;
+use std::error::Error;
+
+// --snip--
+
+
+fn main() {
+    let args: Vec<String> = env::args().collect();
+
+    let config = Config::build(&args).unwrap_or_else(|err| {
+        println!("Problem parsing arguments: {err}");
+        process::exit(1);
+    });
+
+    println!("Searching for {}", config.query);
+    println!("In file {}", config.file_path);
+
+    run(config);
+}
+
+fn run(config: Config) -> Result<(), Box<dyn Error>> {
+    let contents = fs::read_to_string(config.file_path)?;
+
+    println!("With text:\n{contents}");
+
+    Ok(())
+}
+
+struct Config {
+    query: String,
+    file_path: String,
+}
+
+impl Config {
+    fn build(args: &[String]) -> Result<Config, &'static str> {
+        if args.len() < 3 {
+            return Err("not enough arguments");
+        }
+
+        let query = args[1].clone();
+        let file_path = args[2].clone();
+
+        Ok(Config { query, file_path })
+    }
+}
+```
+
+示例 12-12：更改 `run` 函数以返回 `Result`
+
+我们在这里做了三个重要的更改。首先，我们将 `run` 函数的返回类型更改为 `Result<(), Box<dyn Error>>`。这个函数之前返回单元类型 `()`，我们在 `Ok` 情况下保持该值作为返回值。
+
+对于错误类型，我们使用了特征对象 `Box<dyn Error>`（并且我们通过顶部的 use 语句将 `std::error::Error` 引入作用域）。我们将在第 18 章中介绍特征对象。现在，只需知道 `Box<dyn Error>` 意味着该函数将返回一个实现 `Error` 特征的类型，但我们不必指定返回值的具体类型。这使我们能够灵活地在不同的错误情况下返回可能是不同类型的错误值。`dyn` 关键字是 dynamic 的缩写。
+
+其次，我们移除了对 `expect` 的调用，转而使用 `?` 运算符，正如我们在第 9 章中讨论的那样。与在错误时 `panic!` 不同，`?` 将从当前函数返回错误值，供调用者处理。
+
+第三，`run` 函数现在在成功情况下返回 `Ok` 值。我们在签名中将 `run` 函数的成功类型声明为 `()`，这意味着我们需要将单元类型值包装在 `Ok` 值中。这种 `Ok(())` 语法一开始可能看起来有点奇怪，但使用 `()` 这样是表示我们调用 `run` 只是为了它的副作用的惯用方式；它不返回我们需要的值。
+
+当你运行这段代码时，它会编译但会显示一个警告：
+
+```rust
+$ cargo run -- the poem.txt
+   Compiling minigrep v0.1.0 (file:///projects/minigrep)
+warning: unused `Result` that must be used
+  --> src/main.rs:19:5
+   |
+19 |     run(config);
+   |     ^^^^^^^^^^^
+   |
+   = note: this `Result` may be an `Err` variant, which should be handled
+   = note: `#[warn(unused_must_use)]` on by default
+help: use `let _ = ...` to ignore the resulting value
+   |
+19 |     let _ = run(config);
+   |     +++++++
+
+warning: `minigrep` (bin "minigrep") generated 1 warning
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.71s
+     Running `target/debug/minigrep the poem.txt`
+Searching for the
+In file poem.txt
+With text:
+I'm nobody! Who are you?
+Are you nobody, too?
+Then there's a pair of us - don't tell!
+They'd banish us, you know.
+
+How dreary to be somebody!
+How public, like a frog
+To tell your name the livelong day
+To an admiring bog!
+```
+
+Rust 告诉我们，我们的代码忽略了 `Result` 值，而 `Result` 值可能表示发生了错误。但我们没有检查是否发生了错误，编译器提醒我们，我们可能打算在这里有一些错误处理代码！让我们现在纠正这个问题。
+
+#### 在 `main` 中处理从 `run` 返回的错误
+
+我们将检查错误并使用类似于我们在示例 12-10 中对 `Config::build` 使用的技术来处理它们，但有一点不同：
+
+文件名：src/main.rs：
+
+```rust
+use std::env;
+use std::error::Error;
+use std::fs;
+use std::process;
+
+fn main() {
+    // --snip--
+
+    let args: Vec<String> = env::args().collect();
+
+    let config = Config::build(&args).unwrap_or_else(|err| {
+        println!("Problem parsing arguments: {err}");
+        process::exit(1);
+    });
+
+    println!("Searching for {}", config.query);
+    println!("In file {}", config.file_path);
+
+    if let Err(e) = run(config) {
+        println!("Application error: {e}");
+        process::exit(1);
+    }
+}
+
+fn run(config: Config) -> Result<(), Box<dyn Error>> {
+    let contents = fs::read_to_string(config.file_path)?;
+
+    println!("With text:\n{contents}");
+
+    Ok(())
+}
+
+struct Config {
+    query: String,
+    file_path: String,
+}
+
+impl Config {
+    fn build(args: &[String]) -> Result<Config, &'static str> {
+        if args.len() < 3 {
+            return Err("not enough arguments");
+        }
+
+        let query = args[1].clone();
+        let file_path = args[2].clone();
+
+        Ok(Config { query, file_path })
+    }
+}
+```
+
+我们使用 `if let` 而不是 `unwrap_or_else` 来检查 `run` 是否返回 `Err` 值，并在返回时调用 `process::exit(1)`。`run` 函数不返回我们想要 `unwrap` 的值，就像 `Config::build` 返回 `Config` 实例那样。因为 `run` 在成功情况下返回 `()`，我们只关心检测错误，所以我们不需要 `unwrap_or_else` 来返回解包的值，这只会是 `()`。
+
+`if let` 和 `unwrap_or_else` 函数的函数体在两种情况下都是相同的：我们打印错误并退出。
+
+### 将代码拆分为库 Crate
+
+到目前为止，我们的 `minigrep` 项目看起来不错！现在我们将拆分 src/main.rs 文件，并将一些代码放入 src/lib.rs 文件中。这样，我们可以测试代码，并拥有一个责任更少的 src/main.rs 文件。
+
+让我们将 src/main.rs 中不在 `main` 函数中的所有代码移动到 src/lib.rs：
+
+- `run` 函数定义
+- 相关的 `use` 语句
+- `Config` 的定义
+- `Config::build` 函数定义
+
+src/lib.rs 的内容应该具有示例 12-13 中显示的签名（为了简洁起见，我们省略了函数体）。请注意，在我们按照示例 12-14 修改 src/main.rs 之前，这不会编译。
+
+文件名：src/lib.rs：
+
+```rust
+use std::error::Error;
+use std::fs;
+
+pub struct Config {
+    pub query: String,
+    pub file_path: String,
+}
+
+impl Config {
+    pub fn build(args: &[String]) -> Result<Config, &'static str> {
+        // --snip--
+        if args.len() < 3 {
+            return Err("not enough arguments");
+        }
+
+        let query = args[1].clone();
+        let file_path = args[2].clone();
+
+        Ok(Config { query, file_path })
+    }
+}
+
+pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
+    // --snip--
+    let contents = fs::read_to_string(config.file_path)?;
+
+    println!("With text:\n{contents}");
+
+    Ok(())
+}
+```
+
+示例 12-13：将 `Config` 和 `run` 移动到 src/lib.rs
+
+我们大量使用了 `pub` 关键字：在 `Config` 上，在其字段和 `build` 方法上，以及在 `run` 函数上。我们现在有了一个可以测试的公共 API 的库 crate！
+
+现在我们需要将移动到 src/lib.rs 的代码引入到 src/main.rs 中二进制 crate 的作用域，如示例 12-14 所示。
+
+文件名：src/main.rs：
+
+```rust
+use std::env;
+use std::process;
+
+use minigrep::Config;
+
+fn main() {
+    // --snip--
+    let args: Vec<String> = env::args().collect();
+
+    let config = Config::build(&args).unwrap_or_else(|err| {
+        println!("Problem parsing arguments: {err}");
+        process::exit(1);
+    });
+
+    println!("Searching for {}", config.query);
+    println!("In file {}", config.file_path);
+
+    if let Err(e) = minigrep::run(config) {
+        // --snip--
+        println!("Application error: {e}");
+        process::exit(1);
+    }
+}
+```
+
+示例 12-14：在 src/main.rs 中使用 `minigrep` 库 crate
+
+我们添加了一行 use `minigrep::Config` 将 `Config` 类型从库 crate 引入到二进制 crate 的作用域中，并且我们在 `run` 函数前加上了我们的 crate 名称。现在所有功能应该都已连接并且可以工作。使用 `cargo run` 运行程序，确保一切正常工作。
+
+呼！这是一项艰巨的工作，但我们为未来的成功做好了准备。现在处理错误变得更加容易，我们已经使代码更加模块化。从现在开始，我们几乎所有的工作都将在 src/lib.rs 中完成。
+
+让我们利用这种新发现的模块化，做一些在旧代码中会很困难但在新代码中很容易的事情：我们将编写一些测试！
