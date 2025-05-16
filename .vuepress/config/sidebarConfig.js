@@ -271,6 +271,11 @@ module.exports = [
         path: "/doc/an-io-project/improving-error-handling-and-modularity",
         collapsable: true,
       },
+      {
+        title: "使用测试驱动开发来开发库的功能",
+        path: "/doc/an-io-project/testing-the-librarys-functionality",
+        collapsable: true,
+      },
     ],
   },
   {
