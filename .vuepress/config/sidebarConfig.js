@@ -276,6 +276,11 @@ module.exports = [
         path: "/doc/an-io-project/testing-the-librarys-functionality",
         collapsable: true,
       },
+      {
+        title: "使用环境变量",
+        path: "/doc/an-io-project/working-with-environment-variables",
+        collapsable: true,
+      },
     ],
   },
   {
