@@ -4,7 +4,7 @@
 
 ### 为大小写不敏感的`search`函数编写一个失败测试
 
-我们首先添加一个新的`search_case_insensitive`函数，当环境变量有值时将调用它。我们将继续遵循TDD过程，所以第一步仍然是编写一个失败测试。我们将为新的`search_case_insensitive`函数添加一个新测试，并将我们的旧测试从`one_result`重命名为`case_sensitive`，以明确两个测试之间的区别，如代码清单12-20所示。
+我们首先添加一个新的`search_case_insensitive`函数，当环境变量有值时将调用它。我们将继续遵循TDD过程，所以第一步仍然是编写一个失败测试。我们将为新的`search_case_insensitive`函数添加一个新测试，并将我们的旧测试从`one_result`重命名为`case_sensitive`，以明确两个测试之间的区别，如代码示例12-20所示。
 
 Filename: src/lib.rs:
 
@@ -85,15 +85,15 @@ Trust me.";
 }
 ```
 
-代码清单12-20：为我们即将添加的大小写不敏感函数添加一个新的失败测试
+代码示例12-20：为我们即将添加的大小写不敏感函数添加一个新的失败测试
 
 注意，我们也编辑了旧测试的`contents`。我们添加了一行文本`"Duct tape."`，使用大写D，当我们以大小写敏感的方式搜索时，它不应该匹配查询`"duct"`。以这种方式更改旧测试有助于确保我们不会意外破坏已经实现的大小写敏感搜索功能。这个测试现在应该通过，并且在我们处理大小写不敏感搜索时应该继续通过。
 
-大小写不敏感搜索的新测试使用`"rUsT"`作为查询。在我们即将添加的`search_case_insensitive`函数中，查询`"rUsT"`应该匹配包含大写R的`"Rust:"`行，并且匹配`"Trust me."`行，尽管两者的大小写与查询不同。这是我们的失败测试，它将无法编译，因为我们还没有定义`search_case_insensitive`函数。可以随意添加一个总是返回空向量的骨架实现，类似于我们在代码清单12-16中为`search`函数所做的那样，以查看测试编译并失败。
+大小写不敏感搜索的新测试使用`"rUsT"`作为查询。在我们即将添加的`search_case_insensitive`函数中，查询`"rUsT"`应该匹配包含大写R的`"Rust:"`行，并且匹配`"Trust me."`行，尽管两者的大小写与查询不同。这是我们的失败测试，它将无法编译，因为我们还没有定义`search_case_insensitive`函数。可以随意添加一个总是返回空向量的骨架实现，类似于我们在代码示例12-16中为`search`函数所做的那样，以查看测试编译并失败。
 
 ### 实现`search_case_insensitive`函数
 
-`search_case_insensitive`函数，如代码清单12-21所示，将与`search`函数几乎相同。唯一的区别是我们将`query`和每个`line`都转换为小写，这样无论输入参数的大小写如何，在检查行是否包含查询时，它们都将是相同的大小写。
+`search_case_insensitive`函数，如代码示例12-21所示，将与`search`函数几乎相同。唯一的区别是我们将`query`和每个`line`都转换为小写，这样无论输入参数的大小写如何，在检查行是否包含查询时，它们都将是相同的大小写。
 
 Filename: src/lib.rs:
 
@@ -190,7 +190,7 @@ Trust me.";
 }
 ```
 
-代码清单12-21：定义`search_case_insensitive`函数，在比较前将查询和行转换为小写
+代码示例12-21：定义`search_case_insensitive`函数，在比较前将查询和行转换为小写
 
 首先，我们将`query`字符串转换为小写，并将其存储在一个同名的新变量中，覆盖原始的`query`。对查询调用`to_lowercase`是必要的，这样无论用户的查询是`"rust"`、`"RUST"`、`"Rust"`还是`"rUsT"`，我们都会将查询视为`"rust"`，并且对大小写不敏感。虽然`to_lowercase`将处理基本的Unicode，但它不会100%准确。如果我们正在编写一个真实的应用程序，我们会想在这里做更多的工作，但本节是关于环境变量，而不是Unicode，所以我们在这里就此打住。
 
@@ -329,7 +329,7 @@ Trust me.";
 }
 ```
 
-我们添加了持有布尔值的`ignore_case`字段。接下来，我们需要`run`函数检查`ignore_case`字段的值，并使用它来决定是调用`search`函数还是`search_case_insensitive`函数，如代码清单12-22所示。这仍然无法编译。
+我们添加了持有布尔值的`ignore_case`字段。接下来，我们需要`run`函数检查`ignore_case`字段的值，并使用它来决定是调用`search`函数还是`search_case_insensitive`函数，如代码示例12-22所示。这仍然无法编译。
 
 Filename: src/lib.rs:
 
@@ -433,9 +433,9 @@ Trust me.";
 }
 ```
 
-代码清单12-22：基于`config.ignore_case`中的值调用`search`或`search_case_insensitive`
+代码示例12-22：基于`config.ignore_case`中的值调用`search`或`search_case_insensitive`
 
-最后，我们需要检查环境变量。用于处理环境变量的函数在标准库的`env`模块中，所以我们在src/lib.rs的顶部将该模块引入作用域。然后我们将使用`env`模块中的`var`函数来检查是否为名为`IGNORE_CASE`的环境变量设置了任何值，如代码清单12-23所示。
+最后，我们需要检查环境变量。用于处理环境变量的函数在标准库的`env`模块中，所以我们在src/lib.rs的顶部将该模块引入作用域。然后我们将使用`env`模块中的`var`函数来检查是否为名为`IGNORE_CASE`的环境变量设置了任何值，如代码示例12-23所示。
 
 Filename: src/lib.rs:
 
@@ -548,13 +548,13 @@ Trust me.";
 }
 ```
 
-代码清单12-23：检查名为`IGNORE_CASE`的环境变量中的任何值
+代码示例12-23：检查名为`IGNORE_CASE`的环境变量中的任何值
 
 在这里，我们创建了一个新变量`ignore_case`。要设置其值，我们调用`env::var`函数并传递`IGNORE_CASE`环境变量的名称。`env::var`函数返回一个`Result`，如果环境变量设置为任何值，它将是成功的`Ok`变体，其中包含环境变量的值。如果环境变量未设置，它将返回`Err`变体。
 
 我们在`Result`上使用`is_ok`方法来检查环境变量是否已设置，这意味着程序应该进行大小写不敏感的搜索。如果`IGNORE_CASE`环境变量未设置为任何值，`is_ok`将返回`false`，程序将执行大小写敏感的搜索。我们不关心环境变量的值，只关心它是否被设置或未设置，所以我们检查`is_ok`而不是使用`unwrap`、`expect`或我们在`Result`上看到的任何其他方法。
 
-我们将`ignore_case`变量中的值传递给`Config`实例，以便`run`函数可以读取该值并决定是调用`search_case_insensitive`还是`search`，正如我们在代码清单12-22中实现的那样。
+我们将`ignore_case`变量中的值传递给`Config`实例，以便`run`函数可以读取该值并决定是调用`search_case_insensitive`还是`search`，正如我们在代码示例12-22中实现的那样。
 
 让我们试一试！首先，我们将在不设置环境变量的情况下运行程序，并使用查询`to`，它应该匹配包含全小写单词to的任何行：
 

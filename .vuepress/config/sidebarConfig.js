@@ -281,6 +281,23 @@ module.exports = [
         path: "/doc/an-io-project/working-with-environment-variables",
         collapsable: true,
       },
+      {
+        title: "使用外部命令",
+        path: "/doc/an-io-project/writing-to-stderr-instead-of-stdout",
+        collapsable: true,
+      },
+    ],
+  },
+  {
+    title: "函数式语言特性：迭代器与闭包",
+    path: "/doc/functional-features/functional-features",
+    collapsable: true,
+    children: [
+      {
+        title: "闭包：捕获其环境的匿名函数",
+        path: "/doc/functional-features/closures",
+        collapsable: true,
+      },
     ],
   },
   {
