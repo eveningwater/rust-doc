@@ -298,6 +298,11 @@ module.exports = [
         path: "/doc/functional-features/closures",
         collapsable: true,
       },
+      {
+        title: "使用迭代器处理一系列项",
+        path: "/doc/functional-features/iterators",
+        collapsable: true,
+      },
     ],
   },
   {
