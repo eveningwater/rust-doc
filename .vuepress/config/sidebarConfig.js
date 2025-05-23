@@ -308,6 +308,11 @@ module.exports = [
         path: "/doc/functional-features/improving-our-io-project",
         collapsable: true,
       },
+      {
+        title: "比较性能：循环 vs. 迭代器",
+        path: "/doc/functional-features/performance",
+        collapsable: true,
+      },
     ],
   },
   {
