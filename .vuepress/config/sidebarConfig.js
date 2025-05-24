@@ -316,6 +316,18 @@ module.exports = [
     ],
   },
   {
+    title: "关于 Cargo 和 Crates.io 的更多信息",
+    path: "/doc/more-about-cargo/more-about-cargo",
+    collapsable: true,
+    children: [
+      {
+        title: "使用发布配置文件自定义构建",
+        path: "/doc/more-about-cargo/release-profiles",
+        collapsable: true,
+      },
+    ],
+  },
+  {
     title: "附录",
     collapsable: true,
     children: [
