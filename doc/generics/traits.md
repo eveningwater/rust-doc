@@ -10,7 +10,7 @@
 
 例如，假设我们有多个结构体，它们持有各种类型和数量的文本：一个 NewsArticle 结构体，它保存在特定位置发布的新闻故事，以及一个 Tweet，它最多可以有 280 个字符，以及指示它是新推文、转发还是对另一条推文的回复的元数据。
 
-我们想要创建一个名为 aggregator 的媒体聚合库 crate，它可以显示可能存储在 NewsArticle 或 Tweet 实例中的数据摘要。为此，我们需要从每种类型获取摘要，我们将通过在实例上调用 summarize 方法来请求该摘要。清单 10-12 显示了表达此行为的公共 Summary 特性的定义。
+我们想要创建一个名为 aggregator 的媒体聚合库 crate，它可以显示可能存储在 NewsArticle 或 Tweet 实例中的数据摘要。为此，我们需要从每种类型获取摘要，我们将通过在实例上调用 summarize 方法来请求该摘要。示例 10-12 显示了表达此行为的公共 Summary 特性的定义。
 
 文件名：src/lib.rs：
 
@@ -20,7 +20,7 @@ pub trait Summary {
 }
 ```
 
-清单 10-12：由 summarize 方法提供的行为组成的 Summary 特性
+示例 10-12：由 summarize 方法提供的行为组成的 Summary 特性
 
 在这里，我们使用 trait 关键字声明一个特性，然后是特性的名称，在本例中是 Summary。我们还将特性声明为 pub，以便依赖此 crate 的 crate 也可以使用此特性，正如我们将在几个示例中看到的那样。在大括号内，我们声明描述实现此特性的类型的行为的方法签名，在本例中是 fn summarize(&self) -> String。
 
@@ -30,7 +30,7 @@ pub trait Summary {
 
 ### 在类型上实现特性
 
-现在我们已经定义了 Summary 特性方法的所需签名，我们可以在媒体聚合器中的类型上实现它。清单 10-13 显示了 Summary 特性在 NewsArticle 结构体上的实现，该结构体使用标题、作者和位置来创建 summarize 的返回值。对于 Tweet 结构体，我们将 summarize 定义为用户名后跟推文的全部文本，假设推文内容已经限制为 280 个字符。
+现在我们已经定义了 Summary 特性方法的所需签名，我们可以在媒体聚合器中的类型上实现它。示例 10-13 显示了 Summary 特性在 NewsArticle 结构体上的实现，该结构体使用标题、作者和位置来创建 summarize 的返回值。对于 Tweet 结构体，我们将 summarize 定义为用户名后跟推文的全部文本，假设推文内容已经限制为 280 个字符。
 
 文件名：src/lib.rs：
 
@@ -66,7 +66,7 @@ impl Summary for Tweet {
 }
 ```
 
-清单 10-13：在 NewsArticle 和 Tweet 类型上实现 Summary 特性
+示例 10-13：在 NewsArticle 和 Tweet 类型上实现 Summary 特性
 
 在类型上实现特性类似于实现常规方法。不同之处在于，在 impl 之后，我们放置要实现的特性名称，然后使用 for 关键字，然后指定要为其实现特性的类型名称。在 impl 块内，我们放置特性定义中定义的方法签名。我们不是在每个签名后添加分号，而是使用大括号并用我们希望特性方法对特定类型具有的特定行为填充方法体。
 
@@ -99,7 +99,7 @@ fn main() {
 
 有时，为特性中的某些或所有方法提供默认行为而不是要求每种类型上的所有方法都有实现是很有用的。然后，当我们在特定类型上实现特性时，我们可以保留或覆盖每个方法的默认行为。
 
-在清单 10-14 中，我们为 Summary 特性的 summarize 方法指定了一个默认字符串，而不是像我们在清单 10-12 中那样只定义方法签名。
+在示例 10-14 中，我们为 Summary 特性的 summarize 方法指定了一个默认字符串，而不是像我们在示例 10-12 中那样只定义方法签名。
 
 文件名：src/lib.rs：
 
@@ -133,7 +133,7 @@ impl Summary for Tweet {
 }
 ```
 
-清单 10-14：定义带有 summarize 方法默认实现的 Summary 特性
+示例 10-14：定义带有 summarize 方法默认实现的 Summary 特性
 
 要使用默认实现来总结 NewsArticle 实例，我们使用空的 impl 块指定 impl Summary for NewsArticle {}。
 
@@ -159,7 +159,7 @@ fn main() {
 
 此代码打印 New article available! (Read more...)。
 
-创建默认实现不需要我们更改清单 10-13 中 Tweet 上 Summary 的实现。原因是覆盖默认实现的语法与实现没有默认实现的特性方法的语法相同。
+创建默认实现不需要我们更改示例 10-13 中 Tweet 上 Summary 的实现。原因是覆盖默认实现的语法与实现没有默认实现的特性方法的语法相同。
 
 默认实现可以调用同一特性中的其他方法，即使这些其他方法没有默认实现。通过这种方式，特性可以提供大量有用的功能，并且只要求实现者指定其中的一小部分。例如，我们可以定义 Summary 特性，使其具有一个必须实现的 summarize_author 方法，然后定义一个具有调用 summarize_author 方法的默认实现的 summarize 方法：
 
@@ -236,7 +236,7 @@ fn main() {
 
 ### 特性作为参数
 
-现在你知道了如何定义和实现特性，我们可以探索如何使用特性来定义接受多种不同类型的函数。我们将使用在清单 10-13 中在 NewsArticle 和 Tweet 类型上实现的 Summary 特性来定义一个 notify 函数，该函数调用其 item 参数上的 summarize 方法，该参数是实现 Summary 特性的某种类型。为此，我们使用 impl Trait 语法，如下所示：
+现在你知道了如何定义和实现特性，我们可以探索如何使用特性来定义接受多种不同类型的函数。我们将使用在示例 10-13 中在 NewsArticle 和 Tweet 类型上实现的 Summary 特性来定义一个 notify 函数，该函数调用其 item 参数上的 summarize 方法，该参数是实现 Summary 特性的某种类型。为此，我们使用 impl Trait 语法，如下所示：
 
 ```rust
 pub trait Summary {
@@ -464,7 +464,7 @@ fn returns_summarizable(switch: bool) -> impl Summary {
 
 ### 使用特性约束有条件地实现方法
 
-通过在使用泛型类型参数的 impl 块上使用特性约束，我们可以为实现指定特性的类型有条件地实现方法。例如，清单 10-15 中的类型 `Pair<T>` 总是实现 new 函数来返回 `Pair<T>` 的新实例（回想一下第 5 章的"定义方法"部分，Self 是 impl 块类型的类型别名，在本例中是 `Pair<T>`）。但在下一个 impl 块中，只有当其内部类型 T 实现允许比较的 PartialOrd 特性和允许打印的 Display 特性时，`Pair<T>` 才会实现 cmp_display 方法。
+通过在使用泛型类型参数的 impl 块上使用特性约束，我们可以为实现指定特性的类型有条件地实现方法。例如，示例 10-15 中的类型 `Pair<T>` 总是实现 new 函数来返回 `Pair<T>` 的新实例（回想一下第 5 章的"定义方法"部分，Self 是 impl 块类型的类型别名，在本例中是 `Pair<T>`）。但在下一个 impl 块中，只有当其内部类型 T 实现允许比较的 PartialOrd 特性和允许打印的 Display 特性时，`Pair<T>` 才会实现 cmp_display 方法。
 
 文件名：src/lib.rs：
 
@@ -493,7 +493,7 @@ impl<T: Display + PartialOrd> Pair<T> {
 }
 ```
 
-清单 10-15：根据特性约束有条件地在泛型类型上实现方法
+示例 10-15：根据特性约束有条件地在泛型类型上实现方法
 
 我们还可以为任何实现另一个特性的类型有条件地实现特性。对满足特性约束的任何类型实现特性称为覆盖实现（blanket implementations），在 Rust 标准库中被广泛使用。例如，标准库为任何实现 Display 特性的类型实现了 ToString 特性。标准库中的 impl 块看起来类似于这段代码：
 

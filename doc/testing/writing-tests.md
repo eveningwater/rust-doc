@@ -24,7 +24,7 @@ $ cargo new adder --lib
 $ cd adder
 ```
 
-adder 库中 src/lib.rs 文件的内容应该如清单 11-1 所示。
+adder 库中 src/lib.rs 文件的内容应该如示例 11-1 所示。
 
 文件名：src/lib.rs：
 
@@ -45,7 +45,7 @@ mod tests {
 }
 ```
 
-清单 11-1：`cargo new` 自动生成的代码
+示例 11-1：`cargo new` 自动生成的代码
 
 该文件以一个示例 add 函数开始，这样我们就有东西可以测试。
 
@@ -53,7 +53,7 @@ mod tests {
 
 示例函数体使用 assert_eq! 宏来断言 result（包含调用 add 函数传入 2 和 2 的结果）等于 4。这个断言作为典型测试格式的示例。让我们运行它，看看这个测试是否通过。
 
-`cargo test` 命令运行项目中的所有测试，如清单 11-2 所示。
+`cargo test` 命令运行项目中的所有测试，如示例 11-2 所示。
 
 ```rust
 $ cargo test
@@ -73,7 +73,7 @@ running 0 tests
 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 ```
 
-清单 11-2：运行自动生成的测试的输出
+示例 11-2：运行自动生成的测试的输出
 
 Cargo 编译并运行了测试。我们看到 running 1 test 这一行。下一行显示生成的测试函数的名称，称为 tests::it_works，以及运行该测试的结果是 ok。总体测试结果摘要 test result: ok. 表示所有测试都通过了，而读作 1 passed; 0 failed 的部分统计了通过或失败的测试数量。
 
@@ -127,7 +127,7 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 
 ```
 
-现在我们将添加另一个测试，但这次我们将创建一个失败的测试！当测试函数中的某些内容发生 panic 时，测试就会失败。每个测试都在一个新线程中运行，当主线程看到测试线程已死亡时，测试被标记为失败。在第 9 章中，我们讨论了最简单的 panic 方式是调用 panic! 宏。将新测试作为名为 another 的函数输入，使你的 src/lib.rs 文件看起来像清单 11-3。
+现在我们将添加另一个测试，但这次我们将创建一个失败的测试！当测试函数中的某些内容发生 panic 时，测试就会失败。每个测试都在一个新线程中运行，当主线程看到测试线程已死亡时，测试被标记为失败。在第 9 章中，我们讨论了最简单的 panic 方式是调用 panic! 宏。将新测试作为名为 another 的函数输入，使你的 src/lib.rs 文件看起来像示例 11-3。
 
 文件名：src/lib.rs：
 
@@ -153,9 +153,9 @@ mod tests {
 }
 ```
 
-清单 11-3：添加第二个测试，由于我们调用了 panic! 宏而失败
+示例 11-3：添加第二个测试，由于我们调用了 panic! 宏而失败
 
-再次使用 cargo test 运行测试。输出应该如清单 11-4 所示，表明我们的 exploration 测试通过，another 测试失败。
+再次使用 cargo test 运行测试。输出应该如示例 11-4 所示，表明我们的 exploration 测试通过，another 测试失败。
 
 ```rust
 $ cargo test
@@ -183,7 +183,7 @@ test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; 
 error: test failed, to rerun pass `--lib`
 ```
 
-清单 11-4：一个测试通过一个测试失败时的测试结果
+示例 11-4：一个测试通过一个测试失败时的测试结果
 
 不是 ok，test tests::another 行显示 FAILED。在单个结果和摘要之间出现了两个新部分：第一部分显示每个测试失败的详细原因。在这种情况下，我们得到的详细信息是 another 失败，因为它在 src/lib.rs 文件的第 17 行 panic 了，显示 'Make this test fail'。下一部分仅列出所有失败测试的名称，当有很多测试和很多详细的失败测试输出时，这很有用。我们可以使用失败测试的名称只运行该测试，以便更容易地调试它；我们将在"控制测试如何运行"部分中详细讨论运行测试的方法。
 
@@ -195,7 +195,7 @@ error: test failed, to rerun pass `--lib`
 
 assert! 宏由标准库提供，当你想确保测试中的某些条件评估为 true 时很有用。我们给 assert! 宏一个计算为布尔值的参数。如果值为 true，则什么都不会发生，测试通过。如果值为 false，assert! 宏会调用 panic! 使测试失败。使用 assert! 宏帮助我们检查代码是否按照我们的意图运行。
 
-在第 5 章的清单 5-15 中，我们使用了 Rectangle 结构体和 can_hold 方法，这里在清单 11-5 中重复。让我们将这段代码放入 src/lib.rs 文件中，然后使用 assert! 宏为它编写一些测试。
+在第 5 章的示例 5-15 中，我们使用了 Rectangle 结构体和 can_hold 方法，这里在示例 11-5 中重复。让我们将这段代码放入 src/lib.rs 文件中，然后使用 assert! 宏为它编写一些测试。
 
 文件名：src/lib.rs：
 
@@ -213,9 +213,9 @@ impl Rectangle {
 }
 ```
 
-清单 11-5：第 5 章中的 Rectangle 结构体及其 can_hold 方法
+示例 11-5：第 5 章中的 Rectangle 结构体及其 can_hold 方法
 
-can_hold 方法返回一个布尔值，这意味着它是 assert! 宏的完美用例。在清单 11-6 中，我们编写了一个测试来测试 can_hold 方法，方法是创建一个宽度为 8、高度为 7 的 Rectangle 实例，并断言它可以容纳另一个宽度为 5、高度为 1 的 Rectangle 实例。
+can_hold 方法返回一个布尔值，这意味着它是 assert! 宏的完美用例。在示例 11-6 中，我们编写了一个测试来测试 can_hold 方法，方法是创建一个宽度为 8、高度为 7 的 Rectangle 实例，并断言它可以容纳另一个宽度为 5、高度为 1 的 Rectangle 实例。
 
 文件名：src/lib.rs：
 
@@ -252,7 +252,7 @@ mod tests {
 }
 ```
 
-清单 11-6：测试 can_hold，检查一个更大的矩形是否确实可以容纳一个更小的矩形
+示例 11-6：测试 can_hold，检查一个更大的矩形是否确实可以容纳一个更小的矩形
 
 注意 tests 模块内的 use super::\*; 行。tests 模块是一个常规模块，遵循我们在第 7 章"引用模块树中项目的路径"部分中介绍的常规可见性规则。因为 tests 模块是一个内部模块，我们需要将外部模块中的被测试代码引入内部模块的作用域。我们在这里使用通配符，所以外部模块中定义的任何内容都可用于这个 tests 模块。
 
@@ -660,11 +660,11 @@ error: test failed, to rerun pass `--lib`
 
 ### 使用 should_panic 检查 panic
 
-除了检查返回值外，确保我们的代码按预期处理错误条件也很重要。例如，考虑我们在第 9 章的代码清单 9-13 中创建的 Guess 类型。使用 Guess 的其他代码依赖于 Guess 实例只包含 1 到 100 之间的值的保证。我们可以编写一个测试，确保尝试创建一个值超出该范围的 Guess 实例会导致 panic。
+除了检查返回值外，确保我们的代码按预期处理错误条件也很重要。例如，考虑我们在第 9 章的代码示例 9-13 中创建的 Guess 类型。使用 Guess 的其他代码依赖于 Guess 实例只包含 1 到 100 之间的值的保证。我们可以编写一个测试，确保尝试创建一个值超出该范围的 Guess 实例会导致 panic。
 
 我们通过在测试函数上添加 should_panic 属性来实现这一点。如果函数内的代码发生 panic，测试就通过；如果函数内的代码没有 panic，测试就失败。
 
-代码清单 11-8 展示了一个测试，用于检查 Guess::new 的错误条件是否在我们预期的情况下发生。
+代码示例 11-8 展示了一个测试，用于检查 Guess::new 的错误条件是否在我们预期的情况下发生。
 
 Filename: src/lib.rs:
 
@@ -695,7 +695,7 @@ mod tests {
 }
 ```
 
-代码清单 11-8：测试某个条件会导致 panic!
+代码示例 11-8：测试某个条件会导致 panic!
 
 我们将 `#[should_panic]` 属性放在 `#[test]` 属性之后，并在它所适用的测试函数之前。让我们看看这个测试通过时的结果：
 
@@ -747,7 +747,7 @@ impl Guess {
 // }
 ```
 
-当我们运行代码清单 11-8 中的测试时，它会失败：
+当我们运行代码示例 11-8 中的测试时，它会失败：
 
 ```rust
 $ cargo test
@@ -773,7 +773,7 @@ error: test failed, to rerun pass `--lib`
 
 在这种情况下，我们没有得到非常有用的信息，但是当我们查看测试函数时，我们看到它被标注为 `#[should_panic]`。我们得到的失败意味着测试函数中的代码没有引起 panic。
 
-使用 should_panic 的测试可能不够精确。即使测试因为我们预期之外的原因而 panic，should_panic 测试也会通过。为了使 should_panic 测试更精确，我们可以在 should_panic 属性中添加一个可选的 expected 参数。测试工具将确保失败消息包含所提供的文本。例如，考虑代码清单 11-9 中 Guess 的修改代码，其中 new 函数根据值是太小还是太大而使用不同的消息进行 panic。
+使用 should_panic 的测试可能不够精确。即使测试因为我们预期之外的原因而 panic，should_panic 测试也会通过。为了使 should_panic 测试更精确，我们可以在 should_panic 属性中添加一个可选的 expected 参数。测试工具将确保失败消息包含所提供的文本。例如，考虑代码示例 11-9 中 Guess 的修改代码，其中 new 函数根据值是太小还是太大而使用不同的消息进行 panic。
 
 Filename: src/lib.rs:
 
@@ -812,7 +812,7 @@ mod tests {
 }
 ```
 
-代码清单 11-9：使用包含指定子字符串的 panic! 消息进行测试
+代码示例 11-9：使用包含指定子字符串的 panic! 消息进行测试
 
 这个测试将通过，因为我们在 should_panic 属性的 expected 参数中放置的值是 Guess::new 函数 panic 消息的子字符串。我们可以指定我们期望的整个 panic 消息，在这种情况下将是 Guess value must be less than or equal to 100, got 200。你选择指定的内容取决于 panic 消息中有多少是唯一的或动态的，以及你希望测试有多精确。在这种情况下，panic 消息的子字符串足以确保测试函数中的代码执行 else if value > 100 分支。
 
@@ -882,7 +882,7 @@ error: test failed, to rerun pass `--lib`
 
 ### 在测试中使用 `Result<T, E>`
 
-到目前为止，我们的测试在失败时都会 panic。我们也可以使用 `Result<T, E>` 编写测试！这里是代码清单 11-1 中的测试，重写为使用 `Result<T, E>` 并在 panic 时返回 Err：
+到目前为止，我们的测试在失败时都会 panic。我们也可以使用 `Result<T, E>` 编写测试！这里是代码示例 11-1 中的测试，重写为使用 `Result<T, E>` 并在 panic 时返回 Err：
 
 ```rust
 pub fn add(left: u64, right: u64) -> u64 {

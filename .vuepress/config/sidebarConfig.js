@@ -325,6 +325,11 @@ module.exports = [
         path: "/doc/more-about-cargo/release-profiles",
         collapsable: true,
       },
+      {
+        title: "将 Crate 发布到 Crates.io",
+        path: "/doc/more-about-cargo/publishing-to-crates-io",
+        collapsable: true,
+      },
     ],
   },
   {
