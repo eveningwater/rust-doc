@@ -330,6 +330,11 @@ module.exports = [
         path: "/doc/more-about-cargo/publishing-to-crates-io",
         collapsable: true,
       },
+      {
+        title: "使用 Cargo 构建工作空间",
+        path: "/doc/more-about-cargo/cargo-workspaces",
+        collapsable: true,
+      },
     ],
   },
   {
