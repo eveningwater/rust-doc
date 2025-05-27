@@ -335,6 +335,11 @@ module.exports = [
         path: "/doc/more-about-cargo/cargo-workspaces",
         collapsable: true,
       },
+      {
+        title: "使用 `cargo install` 安装二进制文件",
+        path: "/doc/more-about-cargo/installing-binaries",
+        collapsable: true,
+      },
     ],
   },
   {
