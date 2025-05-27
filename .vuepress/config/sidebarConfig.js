@@ -340,6 +340,23 @@ module.exports = [
         path: "/doc/more-about-cargo/installing-binaries",
         collapsable: true,
       },
+      {
+        title: "使用自定义命令扩展 Cargo",
+        path: "/doc/more-about-cargo/extending-cargo",
+        collapsable: true,
+      },
+    ],
+  },
+  {
+    title: "智能指针",
+    path: "/doc/smart-pointers/smart-pointers",
+    collapsable: true,
+    children: [
+      {
+        title: "使用 Box<T> 指向堆上的数据",
+        path: "/doc/smart-pointers/box",
+        collapsable: true,
+      },
     ],
   },
   {
