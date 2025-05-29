@@ -357,6 +357,11 @@ module.exports = [
         path: "/doc/smart-pointers/box",
         collapsable: true,
       },
+      {
+        title: "通过`Deref`特性将智能指针视为常规引用",
+        path: "/doc/smart-pointers/deref",
+        collapsable: true,
+      },
     ],
   },
   {
