@@ -362,6 +362,11 @@ module.exports = [
         path: "/doc/smart-pointers/deref",
         collapsable: true,
       },
+      {
+        title: "使用`Drop`特性在清理时运行代码",
+        path: "/doc/smart-pointers/drop",
+        collapsable: true,
+      },
     ],
   },
   {
