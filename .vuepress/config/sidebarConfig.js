@@ -367,6 +367,11 @@ module.exports = [
         path: "/doc/smart-pointers/drop",
         collapsable: true,
       },
+      {
+        title: "`Rc<T>`，引用计数智能指针",
+        path: "/doc/smart-pointers/rc",
+        collapsable: true,
+      },
     ],
   },
   {
