@@ -372,6 +372,11 @@ module.exports = [
         path: "/doc/smart-pointers/rc",
         collapsable: true,
       },
+      {
+        title: "`RefCell<T>`和内部可变性模式",
+        path: "/doc/smart-pointers/interior-mutability",
+        collapsable: true,
+      },
     ],
   },
   {
