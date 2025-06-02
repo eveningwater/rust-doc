@@ -377,6 +377,11 @@ module.exports = [
         path: "/doc/smart-pointers/interior-mutability",
         collapsable: true,
       },
+      {
+        title: "引用循环可能导致内存泄漏",
+        path: "/doc/smart-pointers/reference-cycles",
+        collapsable: true,
+      },
     ],
   },
   {
