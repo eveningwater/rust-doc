@@ -385,6 +385,18 @@ module.exports = [
     ],
   },
   {
+    title: "无畏并发",
+    path: "/doc/concurrency/concurrency",
+    collapsable: true,
+    children: [
+      {
+        title: "使用线程同时运行代码",
+        path: "/doc/concurrency/threads",
+        collapsable: true,
+      },
+    ],
+  },
+  {
     title: "附录",
     collapsable: true,
     children: [
