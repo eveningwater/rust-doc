@@ -394,6 +394,11 @@ module.exports = [
         path: "/doc/concurrency/threads",
         collapsable: true,
       },
+      {
+        title: "使用消息传递在线程间传递数据",
+        path: "/doc/concurrency/message-passing",
+        collapsable: true,
+      },
     ],
   },
   {
