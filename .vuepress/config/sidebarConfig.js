@@ -399,6 +399,11 @@ module.exports = [
         path: "/doc/concurrency/message-passing",
         collapsable: true,
       },
+      {
+        title: "共享状态并发",
+        path: "/doc/concurrency/shared-state",
+        collapsable: true,
+      },
     ],
   },
   {
