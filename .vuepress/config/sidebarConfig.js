@@ -404,6 +404,11 @@ module.exports = [
         path: "/doc/concurrency/shared-state",
         collapsable: true,
       },
+      {
+        title: "使用`Send`和`Sync`特性的可扩展并发",
+        path: "/doc/concurrency/extensible-concurrency-sync-and-send",
+        collapsable: true,
+      },
     ],
   },
   {
