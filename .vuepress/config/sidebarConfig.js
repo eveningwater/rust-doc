@@ -412,6 +412,18 @@ module.exports = [
     ],
   },
   {
+    title: "异步编程基础：Async、Await、Futures 和 Streams",
+    path: "/doc/async-await/async-await",
+    collapsable: true,
+    children: [
+      {
+        title: "Future 与异步语法",
+        path: "/doc/async-await/futures-and-syntax",
+        collapsable: true,
+      },
+    ],
+  },
+  {
     title: "附录",
     collapsable: true,
     children: [
