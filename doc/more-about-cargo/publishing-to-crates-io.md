@@ -115,7 +115,7 @@ Listing 14-2: Documentation for the `my_crate` crate as a whole
 
 好消息是，如果结构对其他人从另一个库中使用不方便，你无需重新安排你的内部组织：相反，你可以通过使用 `pub use` 来重新导出项，以创建一个与你的私有结构不同的公共结构。重新导出将一个公共项从一个位置导出到另一个位置，就像它是在另一个位置定义的一样。
 
-例如，假设我们创建了一个名为 art 的库，用于建模艺术概念。该库中有两个模块：一个 `kinds` 模块包含两个名为 `PrimaryColor` 和 `SecondaryColor` 的枚举，以及一个 `utils` 模块包含一个名为 `mix` 的函数，如清单 14-3 所示：
+例如，假设我们创建了一个名为 art 的库，用于建模艺术概念。该库中有两个模块：一个 `kinds` 模块包含两个名为 `PrimaryColor` 和 `SecondaryColor` 的枚举，以及一个 `utils` 模块包含一个名为 `mix` 的函数，如示例 14-3 所示：
 
 Filename: src/lib.rs:
 
@@ -156,7 +156,7 @@ pub mod utils {
 }
 ```
 
-清单 14-3：一个 `art` 库，其项组织在 `kinds` 和 `utils` 模块中
+示例 14-3：一个 `art` 库，其项组织在 `kinds` 和 `utils` 模块中
 
 图 14-3 显示了 `cargo doc` 为此 crate 生成的文档首页的样子：
 
@@ -166,7 +166,7 @@ pub mod utils {
 
 请注意，`PrimaryColor` 和 `SecondaryColor` 类型以及 `mix` 函数并未列在首页上。我们必须点击 `kinds` 和 `utils` 才能看到它们。
 
-依赖于此库的另一个 crate 需要 `use` 语句将 `art` 中的项引入作用域，指定当前定义的模块结构。清单 14-4 显示了一个使用 `art` crate 中的 `PrimaryColor` 和 `mix` 项的 crate 示例：
+依赖于此库的另一个 crate 需要 `use` 语句将 `art` 中的项引入作用域，指定当前定义的模块结构。示例 14-4 显示了一个使用 `art` crate 中的 `PrimaryColor` 和 `mix` 项的 crate 示例：
 
 Filename: src/main.rs:
 
@@ -181,11 +181,11 @@ fn main() {
 }
 ```
 
-清单 14-4：一个使用 `art` crate 项并导出其内部结构的 crate
+示例 14-4：一个使用 `art` crate 项并导出其内部结构的 crate
 
-清单 14-4 中使用 `art` crate 的代码作者必须弄清楚 `PrimaryColor` 在 `kinds` 模块中，而 `mix` 在 `utils` 模块中。`art` crate 的模块结构对于开发 `art` crate 的开发者来说比使用它的开发者更相关。内部结构对于试图理解如何使用 `art` crate 的人来说不包含任何有用的信息，反而会造成困惑，因为使用它的开发者必须弄清楚在哪里查找，并且必须在 `use` 语句中指定模块名称。
+示例 14-4 中使用 `art` crate 的代码作者必须弄清楚 `PrimaryColor` 在 `kinds` 模块中，而 `mix` 在 `utils` 模块中。`art` crate 的模块结构对于开发 `art` crate 的开发者来说比使用它的开发者更相关。内部结构对于试图理解如何使用 `art` crate 的人来说不包含任何有用的信息，反而会造成困惑，因为使用它的开发者必须弄清楚在哪里查找，并且必须在 `use` 语句中指定模块名称。
 
-为了从公共 API 中移除内部组织结构，我们可以修改清单 14-3 中的 `art` crate 代码，添加 `pub use` 语句以在顶层重新导出项，如清单 14-5 所示：
+为了从公共 API 中移除内部组织结构，我们可以修改示例 14-3 中的 `art` crate 代码，添加 `pub use` 语句以在顶层重新导出项，如示例 14-5 所示：
 
 Filename: src/lib.rs:
 
@@ -227,7 +227,7 @@ pub mod utils {
 }
 ```
 
-清单 14-5：添加 `pub use` 语句以重新导出项
+示例 14-5：添加 `pub use` 语句以重新导出项
 
 `cargo doc` 为此 crate 生成的 API 文档现在将在首页上列出并链接重新导出的项，如图 14-4 所示，使得 `PrimaryColor` 和 `SecondaryColor` 类型以及 `mix` 函数更容易找到。
 
@@ -235,7 +235,7 @@ pub mod utils {
 
 图 14-4：`art` 文档的首页，列出了重新导出的项
 
-`art` crate 的用户仍然可以像清单 14-4 中所示那样查看和使用清单 14-3 中的内部结构，或者他们可以使用清单 14-5 中更方便的结构，如清单 14-6 所示：
+`art` crate 的用户仍然可以像示例 14-4 中所示那样查看和使用示例 14-3 中的内部结构，或者他们可以使用示例 14-5 中更方便的结构，如示例 14-6 所示：
 
 Filename: src/main.rs:
 
@@ -251,7 +251,7 @@ fn main() {
 }
 ```
 
-清单 14-6：一个使用 `art` crate 中重新导出项的程序
+示例 14-6：一个使用 `art` crate 中重新导出项的程序
 
 在有许多嵌套模块的情况下，使用 `pub use` 在顶层重新导出类型可以显著改善使用 crate 的人的体验。`pub use` 的另一个常见用途是在当前 crate 中重新导出依赖项的定义，以使该 crate 的定义成为你的 crate 公共 API 的一部分。
 

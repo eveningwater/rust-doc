@@ -421,6 +421,11 @@ module.exports = [
         path: "/doc/async-await/futures-and-syntax",
         collapsable: true,
       },
+      {
+        title: "应用异步并发",
+        path: "/doc/async-await/concurrency-with-async",
+        collapsable: true,
+      },
     ],
   },
   {

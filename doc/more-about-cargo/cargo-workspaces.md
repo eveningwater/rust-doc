@@ -107,7 +107,7 @@ add_one = { path = "../add_one" }
 
 Cargo 不假设工作空间中的 crate 会相互依赖，所以我们需要明确指出依赖关系。
 
-接下来，让我们在 `adder` crate 中使用 `add_one` 函数（来自 `add_one` crate）。打开 adder/src/main.rs 文件并修改 `main` 函数以调用 `add_one` 函数，如清单 14-7 所示。
+接下来，让我们在 `adder` crate 中使用 `add_one` 函数（来自 `add_one` crate）。打开 adder/src/main.rs 文件并修改 `main` 函数以调用 `add_one` 函数，如示例 14-7 所示。
 
 Filename: adder/src/main.rs:
 
@@ -118,7 +118,7 @@ fn main() {
 }
 ```
 
-清单 14-7：在 `adder` crate 中使用 `add_one` 库 crate
+示例 14-7：在 `adder` crate 中使用 `add_one` 库 crate
 
 让我们通过在顶层 add 目录中运行 `cargo build` 来构建工作空间！
 
