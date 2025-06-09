@@ -426,6 +426,11 @@ module.exports = [
         path: "/doc/async-await/concurrency-with-async",
         collapsable: true,
       },
+      {
+        title: "处理任意数量的 Future",
+        path: "/doc/async-await/more-futures",
+        collapsable: true,
+      },
     ],
   },
   {
