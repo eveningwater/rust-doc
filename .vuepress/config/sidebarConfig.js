@@ -431,6 +431,11 @@ module.exports = [
         path: "/doc/async-await/more-futures",
         collapsable: true,
       },
+      {
+        title: "流：按顺序排列的 Future",
+        path: "/doc/async-await/streams",
+        collapsable: true,
+      },
     ],
   },
   {
