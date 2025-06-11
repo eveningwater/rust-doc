@@ -436,6 +436,11 @@ module.exports = [
         path: "/doc/async-await/streams",
         collapsable: true,
       },
+      {
+        title: "深入了解异步特性",
+        path: "/doc/async-await/traits-for-async",
+        collapsable: true,
+      },
     ],
   },
   {
