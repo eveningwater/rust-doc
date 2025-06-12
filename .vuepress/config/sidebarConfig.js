@@ -441,6 +441,11 @@ module.exports = [
         path: "/doc/async-await/traits-for-async",
         collapsable: true,
       },
+      {
+        title: "整合：Future、任务和线程",
+        path: "/doc/async-await/futures-tasks-threads",
+        collapsable: true,
+      },
     ],
   },
   {
