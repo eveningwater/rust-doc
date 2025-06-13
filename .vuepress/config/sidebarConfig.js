@@ -449,6 +449,18 @@ module.exports = [
     ],
   },
   {
+    title: "面向对象编程特性",
+    path: "/doc/oop/oop",
+    collapsable: true,
+    children: [
+      {
+        title: "什么是面向对象",
+        path: "/doc/oop/what-is-oo",
+        collapsable: true,
+      },
+    ],
+  },
+  {
     title: "附录",
     collapsable: true,
     children: [
