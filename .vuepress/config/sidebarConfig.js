@@ -458,6 +458,11 @@ module.exports = [
         path: "/doc/oop/what-is-oo",
         collapsable: true,
       },
+      {
+        title: "使用特征对象来允许不同类型的值",
+        path: "/doc/oop/trait-objects",
+        collapsable: true,
+      },
     ],
   },
   {
