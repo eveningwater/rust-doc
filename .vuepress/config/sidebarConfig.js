@@ -463,6 +463,11 @@ module.exports = [
         path: "/doc/oop/trait-objects",
         collapsable: true,
       },
+      {
+        title: "实现面向对象的设计模式",
+        path: "/doc/oop/oo-design-patterns",
+        collapsable: true,
+      },
     ],
   },
   {
