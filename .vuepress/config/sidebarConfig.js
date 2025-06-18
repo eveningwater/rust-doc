@@ -471,6 +471,18 @@ module.exports = [
     ],
   },
   {
+    title: "模式与匹配",
+    path: "/doc/patterns/patterns",
+    collapsable: true,
+    children: [
+      {
+        title: "模式可以使用的所有位置",
+        path: "/doc/patterns/all-the-places-for-patterns",
+        collapsable: true,
+      },
+    ],
+  },
+  {
     title: "附录",
     collapsable: true,
     children: [
