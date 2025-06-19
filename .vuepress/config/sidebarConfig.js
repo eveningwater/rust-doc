@@ -480,6 +480,16 @@ module.exports = [
         path: "/doc/patterns/all-the-places-for-patterns",
         collapsable: true,
       },
+      {
+        title: "可驳性：模式是否可能匹配失败",
+        path: "/doc/patterns/refutability",
+        collapsable: true,
+      },
+      {
+        title: "模式语法",
+        path: "/doc/patterns/pattern-syntax",
+        collapsable: true,
+      },
     ],
   },
   {

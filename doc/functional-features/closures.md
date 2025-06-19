@@ -317,7 +317,7 @@ impl<T> Option<T> {
 
 > 注意：如果我们要做的操作不需要从环境中捕获值，我们可以使用函数名而不是闭包。例如，我们可以在 `Option<Vec<T>>` 值上调用 `unwrap_or_else(Vec::new)`，以便在值为 `None` 时获得一个新的空向量。编译器会自动为函数定义实现适用的 `Fn` trait。
 
-现在让我们看看切片上定义的标准库方法 `sort_by_key`，看看它与 `unwrap_or_else` 有何不同，以及为什么 `sort_by_key` 使用 `FnMut` 而不是 `FnOnce` 作为 trait bound。闭包以对正在考虑的切片中当前项的引用的形式接收一个参数，并返回一个可以排序的 `K` 类型的值。当您想按每个项的特定属性对切片进行排序时，此函数非常有用。在 Listing 13-7 中，我们有一个 `Rectangle` 实例列表，我们使用 `sort_by_key` 按它们的 `width` 属性从低到高排序：
+现在让我们看看切片上定义的标准库方法 `sort_by_key`，看看它与 `unwrap_or_else` 有何不同，以及为什么 `sort_by_key` 使用 `FnMut` 而不是 `FnOnce` 作为 trait bound。闭包以对正在考虑的切片中当前项的引用的形式接收一个参数，并返回一个可以排序的 `K` 类型的值。当你想按每个项的特定属性对切片进行排序时，此函数非常有用。在 Listing 13-7 中，我们有一个 `Rectangle` 实例列表，我们使用 `sort_by_key` 按它们的 `width` 属性从低到高排序：
 
 Filename: src/main.rs:
 
