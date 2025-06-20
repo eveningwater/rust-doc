@@ -493,6 +493,18 @@ module.exports = [
     ],
   },
   {
+    title: "高级特性",
+    path: "/doc/advanced-features/advanced-features",
+    collapsable: true,
+    children: [
+      {
+        title: "不安全的rust",
+        path: "/doc/advanced-features/unsafe-rust",
+        collapsable: true,
+      },
+    ],
+  },
+  {
     title: "附录",
     collapsable: true,
     children: [
