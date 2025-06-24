@@ -502,6 +502,11 @@ module.exports = [
         path: "/doc/advanced-features/unsafe-rust",
         collapsable: true,
       },
+      {
+        title: "高级特征",
+        path: "/doc/advanced-features/advanced-traits",
+        collapsable: true,
+      },
     ],
   },
   {
