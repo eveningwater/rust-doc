@@ -507,6 +507,11 @@ module.exports = [
         path: "/doc/advanced-features/advanced-traits",
         collapsable: true,
       },
+      {
+        title: "高级类型",
+        path: "/doc/advanced-features/advanced-types",
+        collapsable: true,
+      }
     ],
   },
   {
