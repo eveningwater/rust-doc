@@ -511,7 +511,12 @@ module.exports = [
         title: "高级类型",
         path: "/doc/advanced-features/advanced-types",
         collapsable: true,
-      }
+      },
+      {
+        title: "高级函数和闭包",
+        path: "/doc/advanced-features/advanced-functions-and-closures",
+        collapsable: true,
+      },
     ],
   },
   {
