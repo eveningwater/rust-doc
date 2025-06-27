@@ -517,6 +517,11 @@ module.exports = [
         path: "/doc/advanced-features/advanced-functions-and-closures",
         collapsable: true,
       },
+      {
+        title: "宏",
+        path: "/doc/advanced-features/macros",
+        collapsable: true,
+      },
     ],
   },
   {
