@@ -525,6 +525,18 @@ module.exports = [
     ],
   },
   {
+    title: "最终项目：构建多线程Web服务器",
+    path: "/doc/final-project/final-project",
+    collapsable: true,
+    children: [
+      {
+        title: "构建单线程Web服务器",
+        path: "/doc/final-project/single-threaded",
+        collapsable: true,
+      },
+    ],
+  },
+  {
     title: "附录",
     collapsable: true,
     children: [
