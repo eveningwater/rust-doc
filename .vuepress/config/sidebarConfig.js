@@ -534,6 +534,11 @@ module.exports = [
         path: "/doc/final-project/single-threaded",
         collapsable: true,
       },
+      {
+        title: "将单线程服务器转换为多线程服务器",
+        path: "/doc/final-project/multithreaded",
+        collapsable: true,
+      },
     ],
   },
   {
