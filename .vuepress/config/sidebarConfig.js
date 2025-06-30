@@ -539,6 +539,11 @@ module.exports = [
         path: "/doc/final-project/multithreaded",
         collapsable: true,
       },
+      {
+        title: "优雅关闭和清理",
+        path: "/doc/final-project/graceful-shutdown-and-cleanup",
+        collapsable: true,
+      }
     ],
   },
   {
