@@ -565,6 +565,26 @@ module.exports = [
         path: "/doc/appendix/appendix-c",
         collapsable: true,
       },
+      {
+        title: "附录D: 实用开发工具",
+        path: "/doc/appendix/appendix-d",
+        collapsable: true,
+      },
+      {
+        title: "附录E: 版本",
+        path: "/doc/appendix/appendix-e",
+        collapsable: true,
+      },
+      {
+        title: "附录F: 本书的翻译", 
+        path: "/doc/appendix/appendix-f",
+        collapsable: true,
+      },
+      {
+        title: "附录G: Rust 是如何开发的以及 Nightly Rust",
+        path: "/doc/appendix/appendix-g",
+        collapsable: true,
+      },
     ],
   },
 ];
