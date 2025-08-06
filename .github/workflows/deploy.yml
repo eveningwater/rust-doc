@@ -18,7 +18,7 @@ jobs:
           node-version: '18'
 
       - name: Install dependencies
-        run: npm install
+        run: npm install pnpm -g && pnpm install
 
       - name: Set up Git config
         run: |
@@ -28,6 +28,6 @@ jobs:
         run: git remote set-url origin https://eveningwater:${{ secrets.RUST_DOC_GH_TOKEN }}@github.com/eveningwater/rust-doc.git
 
       - name: Deploy to GitHub Pages
-        run: npm run deploy
+        run: pnpm run deploy
         env:
           GH_TOKEN: ${{ secrets.RUST_DOC_GH_TOKEN }}
