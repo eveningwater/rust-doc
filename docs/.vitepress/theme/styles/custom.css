@@ -1,0 +1,974 @@
+/* 自定义主题样式 */
+
+/* 全局变量 */
+:root {
+  --vp-c-brand: #f97316;
+  --vp-c-brand-light: #fb923c;
+  --vp-c-brand-dark: #ea580c;
+  --vp-c-brand-lighter: #fed7aa;
+  --vp-c-brand-darker: #c2410c;
+  --vp-c-brand-1: #f97316;
+  --vp-c-brand-2: #fb923c;
+  --vp-c-brand-3: #ea580c;
+  --vp-c-brand-4: #c2410c;
+  --vp-c-brand-5: #fed7aa;
+  --vp-c-brand-6: #f97316;
+  --vp-c-brand-7: #fb923c;
+
+  /* 自定义颜色 */
+  --vp-custom-block-tip-bg: rgba(16, 185, 129, 0.1);
+  --vp-custom-block-tip-border: rgba(16, 185, 129, 0.5);
+  --vp-custom-block-warning-bg: rgba(245, 158, 11, 0.1);
+  --vp-custom-block-warning-border: rgba(245, 158, 11, 0.5);
+  --vp-custom-block-danger-bg: rgba(239, 68, 68, 0.1);
+  --vp-custom-block-danger-border: rgba(239, 68, 68, 0.5);
+
+  /* 渐变背景 */
+  --vp-home-hero-gradient: linear-gradient(135deg, #f6b783 0%, #d7600b 100%);
+  --vp-home-hero-gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+
+  /* 阴影变量 */
+  --vp-shadow-1: 0 1px 2px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --vp-shadow-2: 0 3px 12px rgba(0, 0, 0, 0.07), 0 1px 4px rgba(0, 0, 0, 0.07);
+  --vp-shadow-3: 0 12px 32px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.08);
+  --vp-shadow-4: 0 14px 44px rgba(0, 0, 0, 0.12), 0 3px 9px rgba(0, 0, 0, 0.09);
+}
+
+/* 深色模式变量 */
+.dark {
+  --vp-c-brand: #f97316;
+  --vp-c-brand-light: #fb923c;
+  --vp-c-brand-dark: #ea580c;
+  --vp-c-brand-lighter: #fed7aa;
+  --vp-c-brand-darker: #c2410c;
+
+  --vp-home-hero-gradient: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  --vp-home-hero-gradient-secondary: linear-gradient(135deg, #ec4899 0%, #f97316 100%);
+
+  --vp-shadow-1: 0 1px 2px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.3);
+  --vp-shadow-2: 0 3px 12px rgba(0, 0, 0, 0.3), 0 1px 4px rgba(0, 0, 0, 0.3);
+  --vp-shadow-3: 0 12px 32px rgba(0, 0, 0, 0.4), 0 2px 6px rgba(0, 0, 0, 0.3);
+  --vp-shadow-4: 0 14px 44px rgba(0, 0, 0, 0.5), 0 3px 9px rgba(0, 0, 0, 0.4);
+}
+
+ul,
+li {
+  list-style: none;
+}
+
+:focus:focus {
+  outline: none;
+}
+
+/* 首页英雄区域优化 */
+.VPHomeHero {
+  padding: 120px 24px 80px;
+  background: var(--vp-home-hero-gradient);
+  position: relative;
+  overflow: hidden;
+}
+
+.VPHomeHero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="white" opacity="0.1"/><circle cx="10" cy="60" r="0.5" fill="white" opacity="0.1"/><circle cx="90" cy="40" r="0.5" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+  pointer-events: none;
+}
+
+.VPHomeHero .container {
+  position: relative;
+  z-index: 1;
+}
+
+.VPHomeHero .name {
+  font-size: 3.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1rem;
+  animation: fadeInUp 0.8s ease-out;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.VPHomeHero .text {
+  font-size: 2rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 1.5rem;
+  animation: fadeInUp 0.8s ease-out 0.2s both;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.VPHomeHero .tagline {
+  font-size: 1.25rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 2rem;
+  animation: fadeInUp 0.8s ease-out 0.4s both;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* 按钮样式优化 */
+.VPHomeHero .actions {
+  animation: fadeInUp 0.8s ease-out 0.6s both;
+}
+
+.VPButton.brand {
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+  border: none;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.VPButton.brand::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.VPButton.brand:hover::before {
+  left: 100%;
+}
+
+.VPButton.brand:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(249, 115, 22, 0.4);
+}
+
+.VPButton.alt {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+
+.VPButton.alt::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.5s;
+}
+
+.VPButton.alt:hover::before {
+  left: 100%;
+}
+
+.VPButton.alt:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+/* 特性区域优化 */
+.VPHomeFeatures {
+  padding: 80px 24px;
+  position: relative;
+}
+
+.VPHomeFeatures::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="%23cbd5e1" opacity="0.3"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
+  pointer-events: none;
+}
+
+.dark .VPHomeFeatures {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+}
+
+.VPHomeFeatures .container {
+  max-width: 1200px;
+  margin: 1rem auto;
+  position: relative;
+  z-index: 1;
+}
+
+.VPHomeFeatures .item {
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: var(--vp-shadow-2);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+.VPHomeFeatures .item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--vp-c-brand), var(--vp-c-brand-light));
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.VPHomeFeatures .item:hover::before {
+  transform: scaleX(1);
+}
+
+.dark .VPHomeFeatures .item {
+  background: #1e293b;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: var(--vp-shadow-2);
+}
+
+.VPHomeFeatures .item:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--vp-shadow-4);
+}
+
+.dark .VPHomeFeatures .item:hover {
+  box-shadow: var(--vp-shadow-4);
+}
+
+.VPHomeFeatures .title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--vp-c-brand);
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.VPHomeFeatures .details {
+  color: var(--vp-c-text-2);
+  line-height: 1.6;
+}
+
+.container .items {
+  margin: 0;
+  gap: 5px;
+}
+
+/* 导航栏优化 */
+.VPNav {
+  backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.8);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.VPNav.has-sidebar {
+  border-bottom-color: transparent;
+}
+
+.dark .VPNav {
+  background: rgba(15, 23, 42, 0.8);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.VPNav .content {
+  max-width: 100%;
+}
+
+.VPNav .content-body {
+  padding: 0 24px;
+}
+
+.VPNav .curtain {
+  background: linear-gradient(90deg, transparent, rgba(249, 115, 22, 0.1), transparent);
+}
+
+/* 侧边栏优化 */
+.VPSidebar {
+  background: rgba(248, 250, 252, 0.8);
+  backdrop-filter: blur(20px);
+  border-right: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.dark .VPSidebar {
+  background: rgba(15, 23, 42, 0.8);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.VPSidebarItem .item {
+  padding: 2px 8px;
+}
+
+.group .VPSidebarItem.level-0 {
+  padding-bottom: 0;
+}
+
+.VPSidebarItem.level-0>.item {
+  font-weight: 600;
+  color: var(--vp-c-brand);
+  border-radius: 8px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.VPSidebarItem.level-0>.item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(249, 115, 22, 0.1), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+
+.VPSidebarItem.level-0>.item:hover::before {
+  transform: translateX(0);
+}
+
+.VPSidebarItem.level-0>.item:hover {
+  background: rgba(249, 115, 22, 0.1);
+  transform: translateX(4px);
+}
+
+.VPSidebarItem.level-1>.item {
+  border-radius: 6px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.VPSidebarItem.level-1>.item::before {
+  content: '';
+  position: absolute;
+  left: -8px;
+  top: 50%;
+  width: 4px;
+  height: 4px;
+  background: var(--vp-c-brand);
+  border-radius: 50%;
+  transform: translateY(-50%) scale(0);
+  transition: transform 0.3s ease;
+}
+
+.VPSidebarItem.level-1>.item:hover::before {
+  transform: translateY(-50%) scale(1);
+}
+
+.VPSidebarItem.level-1>.item:hover {
+  background: rgba(249, 115, 22, 0.05);
+  transform: translateX(4px);
+}
+
+/* 内容区域优化 */
+.VPDoc {
+  padding: 32px 24px;
+}
+
+.VPDoc .content {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.VPDoc .content-container {
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: var(--vp-shadow-2);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.VPDoc .content-container:hover {
+  box-shadow: var(--vp-shadow-3);
+}
+
+.dark .VPDoc .content-container {
+  background: #1e293b;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: var(--vp-shadow-2);
+}
+
+.dark .VPDoc .content-container:hover {
+  box-shadow: var(--vp-shadow-3);
+}
+
+/* 代码块优化 */
+.VPDoc .content div[class*='language-'] {
+  border-radius: 12px;
+  margin: 1.5rem 0;
+  box-shadow: var(--vp-shadow-1);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.VPDoc .content div[class*='language-']::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--vp-c-brand), var(--vp-c-brand-light));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.VPDoc .content div[class*='language-']:hover::before {
+  opacity: 1;
+}
+
+.VPDoc .content div[class*='language-']:hover {
+  box-shadow: var(--vp-shadow-2);
+  transform: translateY(-2px);
+}
+
+/* 标题样式优化 */
+.VPDoc .content h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--vp-c-brand);
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 3px solid var(--vp-c-brand);
+  position: relative;
+}
+
+.VPDoc .content h1::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--vp-c-brand), var(--vp-c-brand-light));
+  border-radius: 2px;
+}
+
+.VPDoc .content h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--vp-c-text-1);
+  margin: 0.5rem 0;
+  padding-left: 1rem;
+  border-left: 4px solid var(--vp-c-brand);
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.VPDoc .content h2:hover {
+  padding-left: 1.5rem;
+  color: var(--vp-c-brand);
+}
+
+.VPDoc .content h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--vp-c-text-1);
+  margin: 1.5rem 0 1rem;
+  position: relative;
+  padding-left: 0.5rem;
+}
+
+.VPDoc .content h3::before {
+  content: '▶';
+  position: absolute;
+  left: -0.5rem;
+  color: var(--vp-c-brand);
+  font-size: 0.8rem;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.VPDoc .content h3:hover::before {
+  opacity: 1;
+  transform: translateX(4px);
+}
+
+/* 链接样式优化 */
+.VPDoc .content a {
+  color: var(--vp-c-brand);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+  border-radius: 4px;
+}
+
+.VPDoc .content a::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--vp-c-brand);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.VPDoc .content a:hover::before {
+  transform: scaleX(1);
+}
+
+.VPDoc .content a:hover {
+  background: rgba(249, 115, 22, 0.1);
+  color: var(--vp-c-brand-dark);
+  border-color: var(--vp-c-brand-dark);
+}
+
+/* 表格样式优化 */
+.VPDoc .content table {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--vp-shadow-1);
+  transition: all 0.3s ease;
+}
+
+.VPDoc .content table:hover {
+  box-shadow: var(--vp-shadow-2);
+  transform: translateY(-2px);
+}
+
+.VPDoc .content th {
+  background: linear-gradient(135deg, var(--vp-c-brand) 0%, var(--vp-c-brand-dark) 100%);
+  color: white;
+  font-weight: 600;
+  padding: 1rem;
+  text-align: left;
+}
+
+.VPDoc .content td {
+  padding: 1rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  transition: background-color 0.3s ease;
+}
+
+.VPDoc .content tr:hover td {
+  background: rgba(249, 115, 22, 0.05);
+}
+
+.dark .VPDoc .content td {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dark .VPDoc .content tr:hover td {
+  background: rgba(249, 115, 22, 0.1);
+}
+
+/* 自定义块样式优化 */
+.VPDoc .content .custom-block {
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  border-left: 4px solid;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.VPDoc .content .custom-block::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.VPDoc .content .custom-block:hover::before {
+  transform: translateX(100%);
+}
+
+.VPDoc .content .custom-block:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--vp-shadow-2);
+}
+
+.VPDoc .content .custom-block.tip {
+  background: var(--vp-custom-block-tip-bg);
+  border-color: var(--vp-custom-block-tip-border);
+}
+
+.VPDoc .content .custom-block.warning {
+  background: var(--vp-custom-block-warning-bg);
+  border-color: var(--vp-custom-block-warning-border);
+}
+
+.VPDoc .content .custom-block.danger {
+  background: var(--vp-custom-block-danger-bg);
+  border-color: var(--vp-custom-block-danger-border);
+}
+
+/* 列表样式优化 */
+.VPDoc .content ul,
+.VPDoc .content ol {
+  padding-left: 1.5rem;
+}
+
+.VPDoc .content li {
+  margin: 0.5rem 0;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.VPDoc .content ul li::before {
+  content: '•';
+  color: var(--vp-c-brand);
+  font-weight: bold;
+  position: absolute;
+  left: -1rem;
+  transition: all 0.3s ease;
+}
+
+.VPDoc .content ul li:hover::before {
+  transform: scale(1.5);
+}
+
+.VPDoc .content ol li {
+  counter-increment: list-counter;
+}
+
+.VPDoc .content ol li::before {
+  content: counter(list-counter);
+  color: var(--vp-c-brand);
+  font-weight: bold;
+  position: absolute;
+  left: -1.5rem;
+  background: rgba(249, 115, 22, 0.1);
+  border-radius: 50%;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  transition: all 0.3s ease;
+}
+
+.VPDoc .content ol li:hover::before {
+  background: var(--vp-c-brand);
+  color: white;
+  transform: scale(1.2);
+}
+
+/* 引用样式优化 */
+.VPDoc .content blockquote {
+  border-left: 4px solid var(--vp-c-brand);
+  padding: 1rem 1.5rem;
+  margin: 1.5rem 0;
+  background: rgba(249, 115, 22, 0.05);
+  border-radius: 0 8px 8px 0;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.VPDoc .content blockquote::before {
+  content: '"';
+  position: absolute;
+  top: -0.5rem;
+  left: 1rem;
+  font-size: 3rem;
+  color: var(--vp-c-brand);
+  opacity: 0.3;
+  font-family: serif;
+}
+
+.VPDoc .content blockquote:hover {
+  background: rgba(249, 115, 22, 0.1);
+  transform: translateX(4px);
+}
+
+/* 动画效果 */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes bounce {
+
+  0%,
+  20%,
+  53%,
+  80%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  40%,
+  43% {
+    transform: translate3d(0, -8px, 0);
+  }
+
+  70% {
+    transform: translate3d(0, -4px, 0);
+  }
+
+  90% {
+    transform: translate3d(0, -2px, 0);
+  }
+}
+
+@media (min-width: 768px) {
+  .container .items .item.grid-3 {
+    width: calc(100% / 3 - 10px);
+  }
+}
+
+/* 响应式优化 */
+@media (max-width: 768px) {
+  .VPHomeHero {
+    padding: 80px 16px 60px;
+  }
+
+  .VPHomeHero .name {
+    font-size: 2.5rem;
+  }
+
+  .VPHomeHero .text {
+    font-size: 1.5rem;
+  }
+
+  .VPHomeHero .tagline {
+    font-size: 1rem;
+  }
+
+  .VPHomeFeatures {
+    padding: 60px 16px;
+  }
+
+  .VPDoc {
+    padding: 24px 16px;
+  }
+
+  .VPDoc .content-container {
+    padding: 1.5rem;
+  }
+
+  .VPDoc .content h1 {
+    font-size: 2rem;
+  }
+
+  .VPDoc .content h2 {
+    font-size: 1.5rem;
+  }
+
+  .VPDoc .content h3 {
+    font-size: 1.25rem;
+  }
+
+
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, var(--vp-c-brand) 0%, var(--vp-c-brand-dark) 100%);
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, var(--vp-c-brand-dark) 0%, var(--vp-c-brand-darker) 100%);
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* 选择文本样式 */
+::selection {
+  background: var(--vp-c-brand);
+  color: white;
+}
+
+/* 焦点样式 */
+:focus {
+  outline: 2px solid var(--vp-c-brand);
+  outline-offset: 2px;
+}
+
+/* 加载动画 */
+.loading {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(249, 115, 22, 0.3);
+  border-radius: 50%;
+  border-top-color: var(--vp-c-brand);
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 页面切换动画 */
+.page-enter-active,
+.page-leave-active {
+  transition: all 0.3s ease;
+}
+
+.page-enter-from {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+.page-leave-to {
+  opacity: 0;
+  transform: translateX(-20px);
+}
+
+/* 搜索框优化 */
+.VPLocalSearchBox {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--vp-shadow-1);
+  transition: all 0.3s ease;
+}
+
+.VPLocalSearchBox:hover {
+  box-shadow: var(--vp-shadow-2);
+}
+
+.VPLocalSearchBox input {
+  border: none;
+  background: transparent;
+  padding: 12px 16px;
+  font-size: 14px;
+}
+
+.VPLocalSearchBox input:focus {
+  outline: none;
+}
+
+/* 大纲导航优化 */
+.VPDocAside .content-container {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px);
+  border-radius: 12px;
+  box-shadow: var(--vp-shadow-1);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.dark .VPDocAside .content-container {
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.VPDocAside .outline-link {
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.VPDocAside .outline-link:hover {
+  background: rgba(249, 115, 22, 0.1);
+  color: var(--vp-c-brand);
+}
+
+.VPDocAside .outline-link.active {
+  background: var(--vp-c-brand);
+  color: white;
+}
+
+/* 页脚优化 */
+.VPFooter {
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  color: rgba(255, 255, 255, 0.8);
+  padding: 2rem 0;
+  margin-top: 4rem;
+}
+
+.VPFooter .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  text-align: center;
+}
+
+.VPFooter .message {
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.VPFooter .copyright {
+  font-size: 0.9rem;
+  opacity: 0.7;
+}

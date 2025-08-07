@@ -11,7 +11,9 @@
   "devDependencies": {
     "@types/node": "^24.2.0",
     "gh-pages": "^6.3.0",
+    "viewerjs": "^1.11.7",
     "vitepress": "1.6.4",
+    "vitepress-plugin-image-viewer": "^1.1.6",
     "vue": "3.5.18"
   }
 }
