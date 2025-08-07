@@ -6,9 +6,11 @@ export default defineConfig({
   lang: "zh-CN",
   title: "Rust 编程语言",
   description: "Rust 编程语言中文文档",
-
+  head: [['link', { rel: 'icon', href: '/rust-logo.svg' }]],
   // 主题配置
   themeConfig: {
+    
+    logo: "/rust-logo.svg",
     // 导航栏
     nav: [
       { text: "首页", link: "/" },
