@@ -274,11 +274,11 @@ li {
 
 /* 导航栏优化 */
 .VPNav {
-  backdrop-filter: blur(20px);
   background: rgba(255, 255, 255, 0.8);
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   transition: all 0.3s ease;
 }
+
 
 .VPNav.has-sidebar {
   border-bottom-color: transparent;
