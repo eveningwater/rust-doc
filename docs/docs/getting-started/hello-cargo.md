@@ -156,7 +156,7 @@ $ cargo check
 
 让我们回顾一下到目前为止我们对`cargo`的了解：
 
-- 我们可以使用`cargo`来构建项目或者使用`cargo check`来检查代码。
+- 我们可以使用`cargo build`来构建项目或者使用`cargo check`来检查代码。
 - 我们可以使用`cargo run`命令来构建和运行项目。
 - Cargo 并未将构建结果与我们的代码保存在同一目录中，而是将其存储在`target/debug`目录中。
 
