@@ -2,3 +2,4 @@ node_modules
 dist
 target
 enbook.md
+docs/.vitepress/cache
