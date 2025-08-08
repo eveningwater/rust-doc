@@ -73,7 +73,7 @@ loop {
 
 在本章前面，我们描述了等待 `rx.recv`。`recv` 调用返回一个 `future`，并且 `await` 该 `future` 会对其进行 `poll`。我们注意到，运行时会暂停 `future`，直到通道关闭时它准备好 `Some(message)` 或 `None`。通过我们对 `Future` 特性，特别是 `Future::poll` 的更深入理解，我们可以看到它是如何工作的。当 `future` 返回 `Poll::Pending` 时，运行时知道 `future` 尚未准备好。相反，当 `poll` 返回 `Poll::Ready(Some(message))` 或 `Poll::Ready(None)` 时，运行时知道 `future` 已准备好并推进它。
 
-运行时如何做到这一点的具体细节超出了本书的范围，但关键是了解 `future` 的基本机制：运行时 `poll` 它负责的每个 `future`，并在 `future` 尚未准备好时将其重新置于休眠状态。
+运行时如何做到这一点的具体细节超出了本文档的范围，但关键是了解 `future` 的基本机制：运行时 `poll` 它负责的每个 `future`，并在 `future` 尚未准备好时将其重新置于休眠状态。
 
 ## Pin 和 Unpin 特性
 
