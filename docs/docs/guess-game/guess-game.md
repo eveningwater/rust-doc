@@ -111,7 +111,7 @@ let foo = 50;//不可变
 let mut bar = 100;//可变
 ```
 
-> 注意：//语法就是注释语句，注释一直持续到行尾。Rust 忽略了注释中的所有内容，第 3 章将对此进行详细讨论。
+> 注意：//语法就是注释语句，注释一直持续到行尾。Rust 忽略了注释中的所有内容，[第 3 章](../common-concept/comments#注释)将对此进行详细讨论。
 
 现在我们也就知道了`let mut guess`无非就是定义一个可变的变量，变量名就叫做`guess`。而`=`右边的值就是该变量所赋的值，也就是`String::new`。这是一个函数，会返回一个`String`实例。[String](https://doc.rust-lang.org/std/string/struct.String.html)是标准库中的一种数据类型，被叫做字符串，也是`UTF-8`编码的文本类型。
 
@@ -183,7 +183,7 @@ warning: 1 warning emitted
     Finished dev [unoptimized + debuginfo] target(s) in 0.59s
 ```
 
-rust 的警告说明你没有用`read_line`方法返回的`Result`值,也就是说程序并没有处理这个可能的错误。消除警告的办法就是编写实际的错误处理，但是由于你只是想在程序出现问题时崩溃，所以你可以使用`expect`方法。你将在第 9 章中学会如何处理错误。
+rust 的警告说明你没有用`read_line`方法返回的`Result`值,也就是说程序并没有处理这个可能的错误。消除警告的办法就是编写实际的错误处理，但是由于你只是想在程序出现问题时崩溃，所以你可以使用`expect`方法。你将在[第 9 章](../error-handling/recoverable-errors-with-result)中学会如何处理错误。
 
 ## 使用 println! 占位符方法来在终端打印值
 
