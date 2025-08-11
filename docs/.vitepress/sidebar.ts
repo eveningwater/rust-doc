@@ -469,7 +469,7 @@ export const sidebarList = [
         link: "/docs/appendix/appendix-e",
       },
       {
-        text: "附录F: 本书的翻译",
+        text: "附录F: 翻译",
         link: "/docs/appendix/appendix-f",
       },
       {
