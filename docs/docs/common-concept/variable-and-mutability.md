@@ -124,7 +124,7 @@ let spaces = "   ";
 let spaces = spaces.len();
 ```
 
-第一个 Spaces 变量是字符串类型，第二个 Spaces 变量是数字类型。因此，使用变量遮蔽处理可以让我们不必想出不同的名称，例如 Spaces_str 和 Spaces_num；相反，我们可以重用更简单的 Spaces 名称。但是，如果我们尝试使用 mut 来实现这一点，如下所示，我们将收到编译时错误：
+第一个 `spaces` 变量是字符串类型，第二个 `spaces` 变量是数字类型。因此，使用变量遮蔽处理可以让我们不必想出不同的名称，例如 `spaces_str` 和 `spaces_num`；相反，我们可以重用更简单的 `spaces` 名称。但是，如果我们尝试使用 `mut` 来实现这一点，如下所示，我们将收到编译时错误：
 
 ```rust
 let mut spaces = "   ";
