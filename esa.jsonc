@@ -1,0 +1,12 @@
+{
+  // 阿里云 ESA Pages 构建配置
+  // 注意：一旦存在此文件，它将作为构建配置的唯一来源，优先级高于 ESA 控制台的配置
+  "installCommand": "pnpm install",
+  "buildCommand": "pnpm build",
+  "assets": {
+    // VitePress 构建产物输出目录（见 docs/.vitepress/config.ts 的 outDir）
+    "directory": "./dist",
+    // VitePress 是静态站点生成器，未匹配路径时返回 404.html（VitePress 会自动生成）
+    "notFoundStrategy": "404Page"
+  }
+}
