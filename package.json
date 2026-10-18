@@ -5,8 +5,9 @@
   "scripts": {
     "dev": "vitepress dev docs",
     "build": "vitepress build docs",
+    "build:github": "BASE_PATH=/rust-doc/ vitepress build docs",
     "serve": "vitepress serve docs",
-    "deploy": "pnpm build && gh-pages -d docs/.vitepress/dist"
+    "deploy": "pnpm build:github && gh-pages -d dist"
   },
   "devDependencies": {
     "@types/node": "^24.2.0",

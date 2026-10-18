@@ -1,13 +1,21 @@
 import { defineConfig } from "vitepress";
 import { sidebarList } from "./sidebar";
+
+// 通过环境变量适配不同部署平台：
+// - 阿里云 ESA Pages（域名根路径）：默认 "/"，无需配置
+// - GitHub Pages（仓库子路径）：构建时传入 BASE_PATH=/rust-doc/
+const base = process.env.BASE_PATH || "/";
+
 export default defineConfig({
-  base: process.env.NODE_ENV === "production" ? "/rust-doc/" : "/",
+  base,
+  // 打包产物输出到项目根目录下的 dist，方便 ESA Pages 直接部署
+  outDir: "../dist",
   // 站点配置
   lang: "zh-CN",
   title: "Rust 编程语言",
   description: "Rust 编程语言中文文档",
   head: [
-    ['link', { rel: 'icon', href: process.env.NODE_ENV === "production" ? '/rust-doc/rust-logo.svg' : '/rust-logo.svg' }],
+    ['link', { rel: 'icon', href: `${base}rust-logo.svg` }],
     ['meta', { name: 'theme-color', content: '#f97316' }],
     ['meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }],
     ['meta', { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' }],
